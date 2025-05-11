@@ -1,0 +1,12 @@
+.HeaderBG {
+  background: linear-gradient(90deg , #3a5b97, #7d9ce4);
+  padding: 20px;
+}
+
+.headerTitle {
+  font-family: 'Georgia', serif;
+  color: white;
+  font-size: 60px;
+  margin: 0;
+  text-align: center;
+}

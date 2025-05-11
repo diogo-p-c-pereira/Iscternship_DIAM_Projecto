@@ -1,0 +1,12 @@
+.footerCustom {
+  background: linear-gradient(90deg , #5477b8, #7d9ce4);
+  padding: 15px;
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footerContent {
+  max-width: 700px;
+  margin: auto;
+}
