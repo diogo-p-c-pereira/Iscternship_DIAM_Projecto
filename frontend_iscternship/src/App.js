@@ -5,10 +5,12 @@ import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import { Routes, Route } from 'react-router-dom';
 
+import './Assets/App.css';
+
 // Importar páginas individuais
 import Home from './Pages/Home';
-import Login from './Pages/Login';
-import Register from './Pages/Register';
+import Login from './Pages/Login/Login.js';
+import Register from './Pages/Register/Register.js';
 import ForCompanies from './Pages/ForCompanies';
 
 function App() {

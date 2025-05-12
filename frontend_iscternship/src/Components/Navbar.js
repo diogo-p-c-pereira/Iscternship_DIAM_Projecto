@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../Assets/Styles/NavBar.css';
+import '../Assets/Styles/Components/NavBar.css';
 
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg justify-content-center custom-navbar">

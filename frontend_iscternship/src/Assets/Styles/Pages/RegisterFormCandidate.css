@@ -1,0 +1,97 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  min-height: 60vh;
+}
+
+.register-box {
+  background-color: #1f2b3e;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 50%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 30px;
+  color: white;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  align-items: flex-start; /* Alinha à esquerda */
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.register-field label {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.register-field input,
+.register-field textarea {
+  display: flex;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  background-color: #a3b6d9;
+  align-items: center;
+  width: 100%;
+  color: black;
+  box-shadow: none;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.register-field input:focus,
+.register-field textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+.register-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.register-button {
+  padding: 6px 20px;
+  background-color: #7d9ce4;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #5b7fc4;
+}
+
+.register-description {
+  color: #cecece;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.error-message {
+  color: #ff9999;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+
