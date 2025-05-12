@@ -29,7 +29,7 @@ def candidato(request, candidato_id):
     return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
-def signup(request):
+def signupCandidato(request):
     username = request.data.get('username')
     password = request.data.get('password')
     email = request.data.get('email')
@@ -46,6 +46,25 @@ def signup(request):
     candidato = Candidato(user = user, descricao = request.data.get('descricao'))
     candidato.save()
     return Response({'message': 'User ' + user.username + ' created successfully'}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def signupEmpresa(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    email = request.data.get('email')
+    nome_empresa = request.data.get('nome_empresa')
+    morada = request.data.get('morada')
+
+    if username is None or password is None:
+        return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(username=username).exists():
+        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.create_user(username=username, password=password, email=email, is_staff= True)
+    empresa = Empresa(user = user, nome_empresa = nome_empresa, morada = morada)
+    empresa.save()
+    return Response({'message': 'Empresa ' + user.username + ' created successfully'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def login_view(request):
