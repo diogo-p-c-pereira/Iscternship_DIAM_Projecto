@@ -1,3 +1,4 @@
 (1) >npm install in the frontend_iscternship dir (if node_modules are needed)
 (2) >npm install bootstrap
 (3) >npm install react-router-dom
+(4) >npm install axios moment
