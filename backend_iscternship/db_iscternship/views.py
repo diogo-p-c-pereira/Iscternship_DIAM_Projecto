@@ -20,11 +20,27 @@ def candidato(request, candidato_id):
         serializer = CandidatoSerializer(candidato)
         return Response(serializer.data)
 
-    #elif request.method == 'POST':  # (3)
-     #   serializer = CandidatoSerializer(data=request.data)
-#
- #       if serializer.is_valid():
-  #          serializer.save()
+    elif request.method == 'POST':  # (3)
+        serializer = CandidatoSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+    return Response(status=status.HTTP_201_CREATED)
+
+@api_view(['GET', 'POST'])  # (2)
+#@permission_classes([IsAuthenticated])
+def empresa(request, empresa_id):
+    if request.method == 'GET':  # (3)
+        empresa = Empresa.objects.get(pk=empresa_id)
+        serializer = EmpresaSerializer(empresa)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':  # (3)
+        serializer = EmpresaSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
 
     return Response(status=status.HTTP_201_CREATED)
 
