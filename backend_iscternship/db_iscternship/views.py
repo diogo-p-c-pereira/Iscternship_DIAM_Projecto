@@ -35,6 +35,7 @@ def signupCandidato(request):
     email = request.data.get('email')
     first_name = request.data.get('first_name')
     last_name = request.data.get('last_name')
+    descricao = request.data.get('descricao')
 
     if username is None or password is None:
         return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
@@ -43,7 +44,7 @@ def signupCandidato(request):
         return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
     user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-    candidato = Candidato(user = user, descricao = request.data.get('descricao'))
+    candidato = Candidato(user = user, descricao = descricao)
     candidato.save()
     return Response({'message': 'User ' + user.username + ' created successfully'}, status=status.HTTP_201_CREATED)
 
