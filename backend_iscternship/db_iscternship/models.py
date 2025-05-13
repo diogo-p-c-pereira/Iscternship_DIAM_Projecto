@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Candidato(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     descricao = models.TextField()
+    telefone = models.CharField(max_length=12)
 
 
 
@@ -14,6 +15,7 @@ class Empresa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome_empresa = models.CharField(max_length=50)
     morada = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=12)
     is_approved =models.BooleanField(default=False)
 
 
