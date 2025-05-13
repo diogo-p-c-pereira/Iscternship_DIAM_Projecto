@@ -5,20 +5,44 @@
 
 /* Estado base */
 .nav-button {
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 8px;
   color: white;
-  background-color: transparent;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.3s ease;
+}
+
+.nav-button .nav-label {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.nav-active-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #6c89cf;
+  border-radius: 8px;
+  z-index: 1;
 }
 
 /* Hover com suavidade */
-.nav-button:hover {
-  background-color: #98acd1;
-  color: black;
-  transform: translateY(-1px); /* efeito subtil opcional */
+.nav-button:hover .nav-label {
+  color: rgb(8, 24, 47);
+  transform: translateY(-1px);
+}
+
+.nav-button.active .nav-label {
+  color: white;
+}
+
+.nav-container {
+  position: relative;
+  display: flex;
 }
 
 /* Ao clicar ou focar */

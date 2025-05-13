@@ -4,29 +4,36 @@ import Header from './Components/Header.js';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import ListarCandidatos from './Pages/Admin/ListarCandidatos';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route , useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 import './Assets/App.css';
 
 // Importar páginas individuais
 import Home from './Pages/Home';
 import Login from './Pages/Login/Login.js';
-import Register from './Pages/Register/Register.js';
-import ForCompanies from './Pages/ForCompanies';
+import Register from './Pages/ForCandidates/RegisterPageCandidate.js';
+import ForCompanies from './Pages/ForCompanies/RegisterPageCompany.js';
 
 function App() {
+  // Use the useLocation hook to get the current location
+  const location = useLocation();
+
+
   return (
     <div className="App">
       <Header />
       <Navbar />
       <main className="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/companies" element={<ForCompanies />} />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/companies" element={<ForCompanies />} />
             <Route path="/listarCandidatos" element = {<ListarCandidatos />} />
-        </Routes>
+          </Routes>
+        </AnimatePresence>
       </main>
       <Footer />
     </div>

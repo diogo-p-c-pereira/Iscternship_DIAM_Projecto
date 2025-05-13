@@ -1,6 +1,12 @@
+{FRONTEND}
 (1) >npm install in the frontend_iscternship dir (if node_modules are needed)
 (2) >npm install bootstrap
 (3) >npm install react-router-dom
 (4) >npm install axios moment
 (5) >npm i bootstrap
 (6) >npm i reactstrap react react-dom
+(7) >npm install framer-motion 
+
+{BACKEND}
+(1) > python manage.py runserver // correr o server
+

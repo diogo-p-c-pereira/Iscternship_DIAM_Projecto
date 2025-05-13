@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import '../../Assets/Styles/Pages/RegisterFormCandidate.css';
+import '../../Assets/Styles/Pages/RegisterForms.css'; // Reutilizando o estilo existente
 
-const RegisterForm = () => {
+const ForCompanies = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    first_name: '',
-    last_name: '',
+    company_name: '',
     email: '',
+    phone: '',
     password: '',
-    descricao: '',
+    description: '',
   });
 
   const [errors, setErrors] = useState({
-    username: '',
-    first_name: '',
-    last_name: '',
+    company_name: '',
     email: '',
+    phone: '',
     password: '',
-    descricao: ''
+    description: '',
   });
 
   const handleChange = (e) => {
@@ -27,26 +25,15 @@ const RegisterForm = () => {
   const validateForm = () => {
     let valid = true;
     const newErrors = {
-      username: '',
-      first_name: '',
-      last_name: '',
+      company_name: '',
       email: '',
+      phone: '',
       password: '',
-      descricao: ''
+      description: '',
     };
 
-    if (!formData.username.trim()) {
-      newErrors.username = 'O username é obrigatório.';
-      valid = false;
-    }
-
-    if (!formData.first_name.trim()) {
-      newErrors.first_name = 'O primeiro nome é obrigatório.';
-      valid = false;
-    }
-
-    if (!formData.last_name.trim()) {
-      newErrors.last_name = 'O último nome é obrigatório.';
+    if (!formData.company_name.trim()) {
+      newErrors.company_name = 'O nome da empresa é obrigatório.';
       valid = false;
     }
 
@@ -58,6 +45,14 @@ const RegisterForm = () => {
       valid = false;
     }
 
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'O número de telefone é obrigatório.';
+      valid = false;
+    } else if (!/^\d+$/.test(formData.phone)) {
+      newErrors.phone = 'O número de telefone deve conter apenas dígitos.';
+      valid = false;
+    }
+
     if (!formData.password.trim()) {
       newErrors.password = 'A password é obrigatória.';
       valid = false;
@@ -66,8 +61,8 @@ const RegisterForm = () => {
       valid = false;
     }
 
-    if (!formData.descricao.trim()) {
-      newErrors.descricao = 'A descrição é obrigatória.';
+    if (!formData.description.trim()) {
+      newErrors.description = 'A descrição é obrigatória.';
       valid = false;
     }
 
@@ -79,6 +74,7 @@ const RegisterForm = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log('Formulário válido:', formData);
+      // Fazer o fetch/axios para enviar os dados ao backend
     } else {
       console.log('Formulário inválido');
     }
@@ -87,34 +83,28 @@ const RegisterForm = () => {
   return (
     <div className="register-container">
       <form className="register-box" onSubmit={handleSubmit}>
-        <h2 className="register-title">Registo</h2>
+        <h2 className="register-title">Registo de Empresa</h2>
 
         <p className="register-description">
-          Registo de candidato — Cria a tua conta para poderes candidatar-te às vagas disponíveis diante várias empresas aqui no Iscternship!!
+          Registe-se como empresa e aguarde a autenticação do seu registo. Após a autenticação, poderá publicar vagas para estágios.
         </p>
 
         <div className="register-field">
-          <label>Username</label>
-          <input type="text" name="username" value={formData.username} onChange={handleChange} />
-          {errors.username && <p className="error-message">{errors.username}</p>}
-        </div>
-
-        <div className="register-field">
-          <label>Primeiro Nome</label>
-          <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} />
-          {errors.first_name && <p className="error-message">{errors.first_name}</p>}
-        </div>
-
-        <div className="register-field">
-          <label>Último Nome</label>
-          <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} />
-          {errors.last_name && <p className="error-message">{errors.last_name}</p>}
+          <label>Nome da Empresa</label>
+          <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} />
+          {errors.company_name && <p className="error-message">{errors.company_name}</p>}
         </div>
 
         <div className="register-field">
           <label>Email</label>
           <input type="text" name="email" value={formData.email} onChange={handleChange} />
           {errors.email && <p className="error-message">{errors.email}</p>}
+        </div>
+
+        <div className="register-field">
+          <label>Telefone</label>
+          <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
+          {errors.phone && <p className="error-message">{errors.phone}</p>}
         </div>
 
         <div className="register-field">
@@ -125,8 +115,8 @@ const RegisterForm = () => {
 
         <div className="register-field">
           <label>Descrição</label>
-          <textarea name="descricao" value={formData.descricao} onChange={handleChange} rows="3" />
-          {errors.descricao && <p className="error-message">{errors.descricao}</p>}
+          <textarea name="description" value={formData.description} onChange={handleChange} rows="3" />
+          {errors.description && <p className="error-message">{errors.description}</p>}
         </div>
 
         <div className="register-button-container">
@@ -137,4 +127,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ForCompanies;
