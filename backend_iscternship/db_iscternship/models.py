@@ -14,6 +14,7 @@ class Empresa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome_empresa = models.CharField(max_length=50)
     morada = models.CharField(max_length=100)
+    is_approved =models.BooleanField(default=False)
 
 
 class Review(models.Model):
