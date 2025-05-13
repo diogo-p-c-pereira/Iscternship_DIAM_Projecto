@@ -79,7 +79,6 @@ const RegisterForm = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log('Formulário válido:', formData);
-      // fazer o fetch/axios para Django
     } else {
       console.log('Formulário inválido');
     }
