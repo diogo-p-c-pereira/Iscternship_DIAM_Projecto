@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 
 @api_view(['GET', 'POST'])  # (2)
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def candidato(request, candidato_id):
     if request.method == 'GET':  # (3)
         candidato = Candidato.objects.get(pk=candidato_id)
