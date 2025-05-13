@@ -3,4 +3,4 @@
 (3) >npm install react-router-dom
 (4) >npm install axios moment
 (5) >npm i bootstrap
-(69 >npm i reactstrap react react-dom
+(6) >npm i reactstrap react react-dom
