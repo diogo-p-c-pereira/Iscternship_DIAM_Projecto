@@ -28,6 +28,14 @@ def candidato(request, candidato_id):
 
     return Response(status=status.HTTP_201_CREATED)
 
+@api_view(['GET'])
+#@permission_classes([]) fazer permissões só superuser
+def verCandidatos(request):
+    candidato = Candidato.objects.all()
+    serializer = CandidatoSerializer(candidato, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['GET', 'POST'])  # (2)
 #@permission_classes([IsAuthenticated])
 def empresa(request, empresa_id):

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Components/Header.js';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
+import ListarCandidatos from './Pages/Admin/ListarCandidatos';
 import { Routes, Route } from 'react-router-dom';
 
 import './Assets/App.css';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/companies" element={<ForCompanies />} />
+            <Route path="/listarCandidatos" element = {<ListarCandidatos />} />
         </Routes>
       </main>
       <Footer />
