@@ -3,8 +3,10 @@ import { Table , Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
 function ListarCandidatos() {
   const URL_CANDIDATOS = "http://localhost:8000/db_iscternship/api/verCandidatos/"; // (1)
+    const URL_DELETECANDIDATO = "http://localhost:8000/db_iscternship/api/deleteCandidato/";
   const [candidatosList, setCandidatosList] = useState([]); // (2)
 
   const getCandidatos = () => { // (3)
@@ -18,8 +20,8 @@ function ListarCandidatos() {
     getCandidatos();
   }, []);
 
-  const apagarCandidatos = () => {
-      
+  const apagarCandidato = (id) => {
+      axios.delete(URL_DELETECANDIDATO + id).then(navigate(0))
   }
 
   const centered = { textAlign: "center" };

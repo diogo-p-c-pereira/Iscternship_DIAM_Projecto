@@ -35,6 +35,13 @@ def verCandidatos(request):
     serializer = CandidatoSerializer(candidato, many=True)
     return Response(serializer.data)
 
+@api_view(["DELETE"])
+def deleteCandidato(request, candidato_id):
+    candidato = Candidato.objects.get(pk=candidato_id)
+    user = User.objects.get(pk=candidato.user_id)
+    candidato.delete()
+    user.delete()
+
 
 @api_view(['GET', 'POST'])  # (2)
 #@permission_classes([IsAuthenticated])
