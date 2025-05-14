@@ -72,6 +72,12 @@ def signupCandidato(request):
     if username is None or password is None:
         return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
 
+    if email is None or first_name is None or last_name is None:
+        return Response({'error': 'invalid email/first_name/last_name'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(email=email).exists():
+        return Response({'error': 'email already registered'}, status=status.HTTP_400_BAD_REQUEST)
+
     if User.objects.filter(username=username).exists():
         return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -89,8 +95,15 @@ def signupEmpresa(request):
     morada = request.data.get('morada')
     telefone = request.data.get('telefone')
 
+
     if username is None or password is None:
         return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if email is None or nome_empresa is None:
+        return Response({'error': 'invalid email/nome_empresa'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if User.objects.filter(email=email).exists():
+        return Response({'error': 'email already registered'}, status=status.HTTP_400_BAD_REQUEST)
 
     if User.objects.filter(username=username).exists():
         return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
