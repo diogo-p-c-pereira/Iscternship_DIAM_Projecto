@@ -28,19 +28,30 @@ def candidato(request, candidato_id):
 
     return Response(status=status.HTTP_201_CREATED)
 
+
+@api_view(['GET'])  # (2)
+#@permission_classes([IsAuthenticated])
+def candidatoAdmin(request, candidato_id):
+    candidato = Candidato.objects.get(pk=candidato_id)
+    serializer = CandidatoSerializerAdmin(candidato)
+    return Response(serializer.data)
+
+
 @api_view(['GET'])
 #@permission_classes([]) fazer permissões só superuser
 def verCandidatos(request):
     candidato = Candidato.objects.all()
-    serializer = CandidatoSerializer(candidato, many=True)
+    serializer = CandidatoSerializerAdmin(candidato, many=True)
     return Response(serializer.data)
 
 @api_view(["DELETE"])
+#@permission_classes([]) fazer permissões só superuser
 def deleteCandidato(request, candidato_id):
     candidato = Candidato.objects.get(pk=candidato_id)
     user = User.objects.get(pk=candidato.user_id)
     candidato.delete()
     user.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])  # (2)
@@ -98,7 +109,7 @@ def signupEmpresa(request):
 
     if username is None or password is None:
         return Response({'error': 'invalid username/password'}, status=status.HTTP_400_BAD_REQUEST)
-    
+
     if email is None or nome_empresa is None:
         return Response({'error': 'invalid email/nome_empresa'}, status=status.HTTP_400_BAD_REQUEST)
 

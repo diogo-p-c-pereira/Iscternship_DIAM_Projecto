@@ -4,7 +4,7 @@ import {useNavigate, Link} from "react-router-dom";
 import axios from "axios";
 
 
-function ListarCandidatos() {
+function ListCandidates() {
   const URL_CANDIDATOS = "http://localhost:8000/db_iscternship/api/verCandidatos/"; // (1)
     const URL_DELETECANDIDATO = "http://localhost:8000/db_iscternship/api/deleteCandidato/";
     const [candidatosList, setCandidatosList] = useState([]); // (2)
@@ -27,15 +27,17 @@ function ListarCandidatos() {
 
   const centered = { textAlign: "center" };
 //TODO Ver permissões só Admin
+
+    if (!candidatosList) return <p>A carregar dados...</p>;
+    
   return (
       <Table light="true"> {/* (5) */}
           <thead>
+          <tr><th> Candidatos</th></tr>
           <tr>
               <th>Username</th>
               <th>Nome</th>
               <th>Email</th>
-              <th>Telefone</th>
-              <th>Descrição</th>
               <th style={centered}></th>
           </tr>
           </thead>
@@ -45,13 +47,13 @@ function ListarCandidatos() {
                   <td> {c.user.username}</td>
                   <td>{c.user.first_name} {c.user.last_name}</td>
                   <td>{c.user.email}</td>
-                  <td>{c.telefone}</td>
-                  <td>{c.descricao}</td>
                   <td style={{textAlign: "center"}}>
-                      <Link to={`/apagarCandidato/${c.id}`}>
-                          <Button color="danger">Apagar</Button>
+                      <Link to={`/detailCandidates/${c.id}`}>
+                        <Button color="secondary">Detalhes</Button>
                       </Link>
-
+                    <Button color="danger" onClick={() => apagarCandidato(c.id)}>
+                        Apagar
+                    </Button>
                   </td>
               </tr>
           ))}
@@ -60,8 +62,5 @@ function ListarCandidatos() {
   );
 }
 
-/*<Link to={`/apagarCandidato/${c.id}`}>
-                          <Button color="success">Votar</Button>
-                      </Link> */
 
-export default ListarCandidatos;
+export default ListCandidates;

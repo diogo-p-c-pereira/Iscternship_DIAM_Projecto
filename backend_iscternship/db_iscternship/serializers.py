@@ -6,14 +6,31 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
+class UserSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'last_login', 'date_joined')
+
 class CandidatoSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Candidato
         fields = '__all__'
 
+class CandidatoSerializerAdmin(serializers.ModelSerializer):
+    user = UserSerializerAdmin()
+    class Meta:
+        model = Candidato
+        fields = '__all__'
+
 class EmpresaSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    class Meta:
+        model = Empresa
+        fields = '__all__'
+
+class EmpresaSerializerAdmin(serializers.ModelSerializer):
+    user = UserSerializerAdmin()
     class Meta:
         model = Empresa
         fields = '__all__'
