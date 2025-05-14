@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Table , Button } from "reactstrap";
-import { Link } from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import axios from "axios";
 
 
 function ListarCandidatos() {
   const URL_CANDIDATOS = "http://localhost:8000/db_iscternship/api/verCandidatos/"; // (1)
     const URL_DELETECANDIDATO = "http://localhost:8000/db_iscternship/api/deleteCandidato/";
-  const [candidatosList, setCandidatosList] = useState([]); // (2)
+    const [candidatosList, setCandidatosList] = useState([]); // (2)
+      const navigate = useNavigate();
 
   const getCandidatos = () => { // (3)
     axios.get(URL_CANDIDATOS)
