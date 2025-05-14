@@ -55,7 +55,8 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData).then( response => setUser(response.data));
+      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData)
+      setUser(response.data);
       alert('Login realizado com sucesso!');
       console.log(response.data);
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
