@@ -42,6 +42,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         
         
 class VagaSerializer(serializers.ModelSerializer):
+    empresa = EmpresaSerializer()
     class Meta:
         model = Vaga
         fields = '__all__'
