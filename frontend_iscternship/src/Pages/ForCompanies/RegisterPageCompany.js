@@ -1,18 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import LoginForm from '../Login/LoginFormCandidate.js';
-
-const Login = () => (
+import RegisterFormCompany from './RegisterFormCompanies.js';
 
 
+const RegisterCompany = () => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{ duration: 0.4 }}
   >
-    <LoginForm />
+    <RegisterFormCompany />
   </motion.div>
 );
 
-export default Login;
+export default RegisterCompany;

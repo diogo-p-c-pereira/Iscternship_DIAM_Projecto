@@ -34,6 +34,12 @@
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+.login-field input:focus,
+.login-field textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
 
 .login-field label {
   margin-bottom: 5px;
