@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Components/Header.js';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
-import { Routes, Route , useLocation } from 'react-router-dom';
+import { Routes, Route , useLocation, BrowserRouter } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import {useUserContext} from "./UserProvider";
 
@@ -16,6 +16,7 @@ import Register from './Pages/ForCandidates/RegisterPageCandidate.js';
 import ForCompanies from './Pages/ForCompanies/RegisterPageCompany.js';
 import ListCandidates from './Pages/Admin/ListCandidates';
 import DetailCandidates from './Pages/Admin/DetailCandidates';
+import LoginSucesso from './Pages/LoginSucesso.js';
 import Candidatar from './Pages/ForCandidates/Candidatar'
 
 function App() {
@@ -30,15 +31,16 @@ function App() {
       <Navbar />
       <main className="main-content">
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/companies" element={<ForCompanies />} />
-            <Route path="/listCandidates" element = {<ListCandidates />} />
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/companies" element={<ForCompanies />} />
+              <Route path="/listCandidates" element = {<ListCandidates />} />
+              <Route path="/LoginSucesso" element = {<LoginSucesso />} />
               <Route path="/detailCandidates/:candidatoId" element = {<DetailCandidates />} />
               <Route path="/Candidatar/:vagaId" element = {<Candidatar />} />
-          </Routes>
+            </Routes>
         </AnimatePresence>
       </main>
       <Footer />

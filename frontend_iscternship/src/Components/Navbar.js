@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Assets/Styles/Components/NavBar.css';
 import { motion } from 'framer-motion';
@@ -15,12 +15,13 @@ const routes = [
 ];
 
 const routesCandidato = [
-    { path: '/LoginSucesso', label: 'Sucesso' },
+  { path: '/LoginSucesso', label: 'Sucesso' },
+  { path: '/', label: 'Home' },
 ]
+
 const Navbar = () => {
-    const {user, setUser} = useUserContext();
-  const location = useLocation();
-  const r = user? routesCandidato: routes
+  const {user, setUser} = useUserContext();
+  const r = user? routesCandidato : routes
 
   return (
     <nav className="navbar navbar-expand-lg justify-content-center custom-navbar">

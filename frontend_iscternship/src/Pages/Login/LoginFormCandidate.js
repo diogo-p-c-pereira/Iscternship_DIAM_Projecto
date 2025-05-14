@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../../Assets/Styles/Pages/LoginForms.css';
 import axios from 'axios';
 import {useUserContext} from "../../UserProvider";
+import { useNavigate } from 'react-router-dom';
 
 
 const LoginForm = () => {
@@ -46,8 +47,10 @@ const LoginForm = () => {
   };
   
   //,  {withCredentials: true}
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     if (!validateForm()) {
       console.log('Login inválido');
@@ -55,10 +58,10 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData)
-      setUser(response.data);
-      alert('Login realizado com sucesso!');
-      console.log(response.data);
+      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData , {withCredentials: true})
+      setUser(response.data); // cookies
+      navigate('/LoginSucesso'); // Redirecionar para a página inicial ou outra página desejada
+      //console.log(response.data);
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
     } catch (error) {
       if (error.response?.status === 401) {
