@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import '../../Assets/Styles/Pages/RegisterForms.css'; // Reutilizando o estilo existente
+import '../../Assets/Styles/Pages/RegisterForms.css';
+import axios from 'axios';
 
 const ForCompanies = () => {
   const [formData, setFormData] = useState({
-    company_name: '',
+    username: '',
     email: '',
-    phone: '',
     password: '',
-    description: '',
+    morada: '',
+    descricao: '',
+    telefone: ''
   });
 
   const [errors, setErrors] = useState({
-    company_name: '',
+    username: '',
     email: '',
-    phone: '',
     password: '',
-    description: '',
+    morada: '',
+    descricao: '',
+    telefone: ''
   });
 
   const handleChange = (e) => {
@@ -25,15 +28,16 @@ const ForCompanies = () => {
   const validateForm = () => {
     let valid = true;
     const newErrors = {
-      company_name: '',
+      username: '',
       email: '',
-      phone: '',
       password: '',
-      description: '',
+      morada: '',
+      descricao: '',
+      telefone: ''
     };
 
-    if (!formData.company_name.trim()) {
-      newErrors.company_name = 'O nome da empresa é obrigatório.';
+    if (!formData.username.trim()) {
+      newErrors.username = 'O nome da Empresa é obrigatório.';
       valid = false;
     }
 
@@ -41,15 +45,7 @@ const ForCompanies = () => {
       newErrors.email = 'O email é obrigatório.';
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'O email deve ser válido (ex: nome@dominio.pt).';
-      valid = false;
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'O número de telefone é obrigatório.';
-      valid = false;
-    } else if (!/^\d+$/.test(formData.phone)) {
-      newErrors.phone = 'O número de telefone deve conter apenas dígitos.';
+      newErrors.email = 'O email deve ser válido.';
       valid = false;
     }
 
@@ -61,8 +57,21 @@ const ForCompanies = () => {
       valid = false;
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = 'A descrição é obrigatória.';
+    if (!formData.morada.trim()) {
+      newErrors.morada = 'A morada é obrigatória.';
+      valid = false;
+    }
+
+    if (!formData.descricao.trim()) {
+      newErrors.descricao = 'A descrição é obrigatória.';
+      valid = false;
+    }
+
+    if (!formData.telefone.trim()) {
+      newErrors.telefone = 'O telemóvel é obrigatório.';
+      valid = false;
+    } else if (!/^[0-9]+$/.test(formData.telefone)) {
+      newErrors.telefone = 'O telemóvel deve conter apenas números.';
       valid = false;
     }
 
@@ -70,13 +79,28 @@ const ForCompanies = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Formulário válido:', formData);
-      // Fazer o fetch/axios para enviar os dados ao backend
-    } else {
-      console.log('Formulário inválido');
+    if (!validateForm()) return;
+
+    const dataToSend = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      nome_empresa: formData.username,
+      morada: formData.morada,
+      telefone: formData.telefone
+    };
+
+    try {
+      await axios.post('http://127.0.0.1:8000/db_iscternship/signupEmpresa/', dataToSend);
+      alert('Empresa registada com sucesso!');
+    } catch (error) {
+      if (error.response?.data?.error) {
+        alert(`Erro ao registar: ${error.response.data.error}`);
+      } else {
+        alert('Erro ao registar: Erro desconhecido.');
+      }
     }
   };
 
@@ -84,15 +108,14 @@ const ForCompanies = () => {
     <div className="register-container">
       <form className="register-box" onSubmit={handleSubmit}>
         <h2 className="register-title">Registo de Empresa</h2>
-
         <p className="register-description">
           Registe-se como empresa e aguarde a autenticação do seu registo. Após a autenticação, poderá publicar vagas para estágios.
         </p>
 
         <div className="register-field">
           <label>Nome da Empresa</label>
-          <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} />
-          {errors.company_name && <p className="error-message">{errors.company_name}</p>}
+          <input type="text" name="username" value={formData.username} onChange={handleChange} />
+          {errors.username && <p className="error-message">{errors.username}</p>}
         </div>
 
         <div className="register-field">
@@ -102,21 +125,27 @@ const ForCompanies = () => {
         </div>
 
         <div className="register-field">
-          <label>Telefone</label>
-          <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
-          {errors.phone && <p className="error-message">{errors.phone}</p>}
-        </div>
-
-        <div className="register-field">
           <label>Password</label>
           <input type="password" name="password" value={formData.password} onChange={handleChange} />
           {errors.password && <p className="error-message">{errors.password}</p>}
         </div>
 
         <div className="register-field">
+          <label>Morada</label>
+          <input type="text" name="morada" value={formData.morada} onChange={handleChange} />
+          {errors.morada && <p className="error-message">{errors.morada}</p>}
+        </div>
+
+        <div className="register-field">
+          <label>Telemóvel</label>
+          <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} />
+          {errors.telefone && <p className="error-message">{errors.telefone}</p>}
+        </div>
+
+        <div className="register-field">
           <label>Descrição</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} rows="3" />
-          {errors.description && <p className="error-message">{errors.description}</p>}
+          <textarea name="descricao" rows="3" value={formData.descricao} onChange={handleChange} />
+          {errors.descricao && <p className="error-message">{errors.descricao}</p>}
         </div>
 
         <div className="register-button-container">

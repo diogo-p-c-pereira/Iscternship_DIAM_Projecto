@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../Assets/Styles/Pages/LoginForms.css';
+import axios from 'axios';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -40,13 +41,24 @@ const LoginForm = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Login válido:', formData);
-      // Aqui podes chamar fetch/axios para autenticar
-    } else {
+    if (!validateForm()) {
       console.log('Login inválido');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData);
+      alert('Login realizado com sucesso!');
+      console.log(response.data);
+      // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
+    } catch (error) {
+      if (error.response?.status === 401) {
+        alert('Credenciais inválidas.');
+      } else {
+        alert('Erro ao tentar fazer login.');
+      }
     }
   };
 

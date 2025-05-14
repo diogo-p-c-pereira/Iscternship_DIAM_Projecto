@@ -10,6 +10,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
     descricao: '',
+    telefone: ''
   });
 
   const [errors, setErrors] = useState({
@@ -18,7 +19,8 @@ const RegisterForm = () => {
     last_name: '',
     email: '',
     password: '',
-    descricao: ''
+    descricao: '',
+    telefone: ''
   });
 
   const handleChange = (e) => {
@@ -33,7 +35,8 @@ const RegisterForm = () => {
       last_name: '',
       email: '',
       password: '',
-      descricao: ''
+      descricao: '',
+      telefone: ''
     };
 
     if (!formData.username.trim()) {
@@ -55,7 +58,7 @@ const RegisterForm = () => {
       newErrors.email = 'O email é obrigatório.';
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'O email deve ser válido (ex: nome@dominio.pt).';
+      newErrors.email = 'O email deve ser válido.';
       valid = false;
     }
 
@@ -72,27 +75,27 @@ const RegisterForm = () => {
       valid = false;
     }
 
+    if (!formData.telefone.trim()) {
+      newErrors.telefone = 'O telefone é obrigatório.';
+      valid = false;
+    }
+
     setErrors(newErrors);
     return valid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      console.log('Formulário inválido');
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/signupCandidato/', formData);
+      await axios.post('http://127.0.0.1:8000/db_iscternship/signupCandidato/', formData);
       alert('Candidato registado com sucesso!');
-      console.log(response.data);
     } catch (error) {
-      if (error.response) {
-        alert('Erro ao registar: ' + (error.response.data.error || 'Erro desconhecido.'));
+      if (error.response?.data?.error) {
+        alert(`Erro ao registar: ${error.response.data.error}`);
       } else {
-        alert('Erro de rede: ' + error.message);
+        alert('Erro ao registar: Erro desconhecido.');
       }
     }
   };
@@ -101,9 +104,8 @@ const RegisterForm = () => {
     <div className="register-container">
       <form className="register-box" onSubmit={handleSubmit}>
         <h2 className="register-title">Registo</h2>
-
         <p className="register-description">
-          Registe-se como candidato — Cria a tua conta para poder candidatar-te às vagas disponíveis diante várias empresas aqui no Iscternship!!
+          Registe-se como candidato — Cria a tua conta para poder candidatar-te às vagas disponíveis aqui no Iscternship!
         </p>
 
         <div className="register-field">
@@ -137,8 +139,14 @@ const RegisterForm = () => {
         </div>
 
         <div className="register-field">
+          <label>Telefone</label>
+          <input type="text" name="telefone" value={formData.telefone} onChange={handleChange} />
+          {errors.telefone && <p className="error-message">{errors.telefone}</p>}
+        </div>
+
+        <div className="register-field">
           <label>Descrição</label>
-          <textarea name="descricao" value={formData.descricao} onChange={handleChange} rows="3" />
+          <textarea name="descricao" rows="3" value={formData.descricao} onChange={handleChange} />
           {errors.descricao && <p className="error-message">{errors.descricao}</p>}
         </div>
 
