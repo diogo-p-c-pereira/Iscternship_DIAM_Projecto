@@ -1,6 +1,7 @@
 import {useParams, useNavigate, Link} from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Gpt from './Gpt'
 import { Button } from "reactstrap";
 
 function Candidatar() {
@@ -43,6 +44,7 @@ const formatDate = (dateString) => {
           <h3>Detalhes da Vaga</h3>
           <h5> {vaga.empresa.nome_empresa}
           </h5>
+          <Gpt/>
 
           <br/>
           <Button color="secondary" onClick={() => navigate(-1)}>
