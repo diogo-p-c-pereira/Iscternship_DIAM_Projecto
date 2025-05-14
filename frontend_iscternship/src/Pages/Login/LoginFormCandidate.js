@@ -61,7 +61,7 @@ const LoginForm = () => {
       const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData , {withCredentials: true})
       setUser(response.data); // cookies
       navigate('/LoginSucesso'); // Redirecionar para a página inicial ou outra página desejada
-      //console.log(response.data);
+      console.log(response.data);
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
     } catch (error) {
       if (error.response?.status === 401) {
