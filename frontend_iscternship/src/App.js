@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import { Routes, Route , useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import {useUserContext} from "./UserProvider";
 
 import './Assets/App.css';
 
@@ -20,6 +21,7 @@ import Candidatar from './Pages/ForCandidates/Candidatar'
 function App() {
   // Use the useLocation hook to get the current location
   const location = useLocation();
+  const { user } = useUserContext();
 
 
   return (

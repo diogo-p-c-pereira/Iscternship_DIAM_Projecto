@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import '../../Assets/Styles/Pages/LoginForms.css';
 import axios from 'axios';
+import {useUserContext} from "../../UserProvider";
+
 
 const LoginForm = () => {
+  const {user, setUser} = useUserContext();
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,6 +45,8 @@ const LoginForm = () => {
     return valid;
   };
 
+  //,  {withCredentials: true}
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -49,7 +55,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData);
+      const response = await axios.post('http://127.0.0.1:8000/db_iscternship/login/', formData).then( response => setUser(response.data));
       alert('Login realizado com sucesso!');
       console.log(response.data);
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página

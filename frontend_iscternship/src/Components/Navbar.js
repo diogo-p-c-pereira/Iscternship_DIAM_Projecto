@@ -3,6 +3,9 @@ import { NavLink, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Assets/Styles/Components/NavBar.css';
 import { motion } from 'framer-motion';
+import {useUserContext} from "../UserProvider";
+
+
 
 const routes = [
   { path: '/', label: 'Home' },
@@ -11,13 +14,18 @@ const routes = [
   { path: '/companies', label: 'For Companies' },
 ];
 
+const routesCandidato = [
+    { path: '/LoginSucesso', label: 'Sucesso' },
+]
 const Navbar = () => {
+    const {user, setUser} = useUserContext();
   const location = useLocation();
+  const r = user? routesCandidato: routes
 
   return (
     <nav className="navbar navbar-expand-lg justify-content-center custom-navbar">
       <ul className="navbar-nav nav-container">
-        {routes.map((route) => (
+        {r.map((route) => (
           <li className="nav-item px-3" key={route.path}>
             <NavLink
               to={route.path}
