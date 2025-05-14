@@ -9,20 +9,20 @@ const Gpt = () => {
 const sendMessage = async () => {
     try {
       const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-      const apiKey = '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';
+      const apiKey = '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'; 
 
 
 const headers = {
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'http://localhost:3000', // or your deployed site
+            'HTTP-Referer': 'http://localhost:3000',
             'X-Title': 'DIAM Api'
         };
 
 
 
         const requestBody = {
-            model: 'nousresearch/deephermes-3-mistral-24b-preview:free', // or 'openai/gpt-4'
+            model: 'nousresearch/deephermes-3-mistral-24b-preview:free', // choosen model
             messages: [{ role: 'user', content: input }]
         };
 

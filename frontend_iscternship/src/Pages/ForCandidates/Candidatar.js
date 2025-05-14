@@ -42,7 +42,10 @@ const formatDate = (dateString) => {
   return (
       <div className="container mt-4" style={{paddingTop: "2%"}}>
           <h3>Detalhes da Vaga</h3>
-          <h5> {vaga.empresa.nome_empresa}
+          <h4>Titulo: {vaga.titulo}</h4>
+          <h5>
+              {vaga.descricao} <br/>
+              {vaga.empresa.nome_empresa}
           </h5>
           <Gpt/>
 
