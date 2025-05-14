@@ -22,7 +22,7 @@ const headers = {
 
 
         const requestBody = {
-            model: 'openai/gpt-3.5-turbo', // or 'openai/gpt-4'
+            model: 'nousresearch/deephermes-3-mistral-24b-preview:free', // or 'openai/gpt-4'
             messages: [{ role: 'user', content: input }]
         };
 
