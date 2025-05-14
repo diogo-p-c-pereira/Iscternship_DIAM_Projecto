@@ -138,7 +138,9 @@ def login_view(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user) # Criação da sessão
-        return Response({'message': 'Logged in successfully'})
+        user = User.objects.get(username=username)
+        serializer = UserSerializerAdmin(user)
+        return Response(serializer.data)
     else:
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
