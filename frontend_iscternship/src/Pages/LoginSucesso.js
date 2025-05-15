@@ -10,7 +10,7 @@ const PaginLoginCandidato = () => {
   const handleLogout = async () => {
     // Tenta terminar a sessão no backend
     try {
-      await axios.post('http://127.0.0.1:8000/db_iscternship/logout/', {}, { withCredentials: true });
+      await axios.post('http://localhost:8000/db_iscternship/logout/', {}, { withCredentials: true });
     } catch (e) {
       // Ignora erros (pode ser que a sessão já esteja terminada)
     }

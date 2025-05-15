@@ -144,7 +144,7 @@ def login_view(request):
     else:
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def logout_view(request):
     logout(request)
     return Response({'message': 'Logged out successfully'})

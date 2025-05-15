@@ -93,7 +93,7 @@ const ForCompanies = () => {
     };
 
     try {
-      await axios.post('http://127.0.0.1:8000/db_iscternship/signupEmpresa/', dataToSend);
+      await axios.post('http://localhost:8000/db_iscternship/signupEmpresa/', dataToSend);
       alert('Empresa registada com sucesso!');
     } catch (error) {
       if (error.response?.data?.error) {

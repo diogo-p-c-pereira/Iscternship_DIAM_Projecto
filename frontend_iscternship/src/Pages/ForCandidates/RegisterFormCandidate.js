@@ -89,7 +89,7 @@ const RegisterForm = () => {
     if (!validateForm()) return;
 
     try {
-      await axios.post('http://127.0.0.1:8000/db_iscternship/signupCandidato/', formData);
+      await axios.post('http://localhost:8000/db_iscternship/signupCandidato/', formData);
       alert('Candidato registado com sucesso!');
     } catch (error) {
       if (error.response?.data?.error) {
