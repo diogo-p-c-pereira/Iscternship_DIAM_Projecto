@@ -9,9 +9,7 @@ class Candidato(models.Model):
     descricao = models.TextField()
     telefone = models.CharField(max_length=12, default=None)
     imagem = models.ImageField(upload_to= 'profile_pics', default='default.png')
-    cv = models.FileField(upload_to= 'cv_files', default=None)
-
-
+    cv = models.FileField(upload_to= 'cv_files', default='empty.pdf', null=True, blank=True)
 
 
 class Empresa(models.Model):
@@ -19,7 +17,7 @@ class Empresa(models.Model):
     nome_empresa = models.CharField(max_length=50)
     morada = models.CharField(max_length=100)
     telefone = models.CharField(max_length=12, default=None)
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=True)
     imagem = models.ImageField(upload_to='profile_pics', default='default.png')
 
 
