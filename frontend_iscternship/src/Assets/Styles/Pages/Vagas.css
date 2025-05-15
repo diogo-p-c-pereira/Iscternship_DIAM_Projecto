@@ -8,6 +8,8 @@
   background: none;
 }
 
+
+
 /* Linha de filtro + botão criar */
 .vagas-filtros {
   display: flex;
@@ -185,3 +187,88 @@
   gap: 8px;
   justify-content: space-between;
 }
+
+.vagas-sem-resultados {
+  color: #fff;
+  text-align: center;
+}
+
+.vaga-candidatar-btn {
+  background: #7d9ce4;
+  color: white;
+  border: none;
+  border-radius: 11px;
+  padding: 8px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.18s;
+}
+
+.vaga-candidatar-btn:hover {
+  background: #5077bc;
+}
+
+.vaga-descricao-detalhe {
+  margin-top: 18px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vaga-descricao-box {
+  background: #e3e8f7;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 6px;
+  color: #233052;
+  font-size: 1rem;
+}
+
+.vagas-modal-fechar {
+  background: #8999c5;
+  margin-top: 16px;
+  width: 100%;
+  font-size: 1.04rem;
+}
+
+.vaga-empresa-extra {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 16px 0;
+}
+
+.vaga-empresa-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+  box-shadow: 0 0 6px #1a2335;
+}
+
+.vaga-empresa-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vagas-barra-pesquisa {
+  background: #f4f7fc;
+  color: #29354a;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 20px;
+  font-size: 17px;
+  width: 320px;
+  outline: none;
+  font-weight: 500;
+  box-shadow: 0 2px 6px #23305220;
+  transition: box-shadow 0.18s, border 0.18s;
+}
+
+.vagas-barra-pesquisa:focus {
+  box-shadow: 0 0 0 2px #cfd8ff;
+  border: 1.5px solid #7d9ce4;
+}
+
+

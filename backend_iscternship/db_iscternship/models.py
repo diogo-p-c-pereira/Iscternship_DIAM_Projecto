@@ -8,8 +8,8 @@ class Candidato(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     descricao = models.TextField()
     telefone = models.CharField(max_length=12, default=None)
-    imagem = models.ImageField(upload_to= 'profile_pics', default='default.png')
-    cv = models.FileField(upload_to= 'cv_files', default='empty.pdf', null=True, blank=True)
+    imagem = models.ImageField(upload_to= 'profile_pics', default='profile_pics/default.png')
+    cv = models.FileField(upload_to= 'cv_files', default='cv_files/empty.pdf', null=True, blank=True)
 
 
 class Empresa(models.Model):
@@ -18,7 +18,7 @@ class Empresa(models.Model):
     morada = models.CharField(max_length=100)
     telefone = models.CharField(max_length=12, default=None)
     is_approved = models.BooleanField(default=True)
-    imagem = models.ImageField(upload_to='profile_pics', default='default.png')
+    imagem = models.ImageField(upload_to='profile_pics', default='profile_pics/default.png')
 
 
 class Review(models.Model):
@@ -54,7 +54,7 @@ class Candidatura(models.Model):
     estado = models.CharField(choices=EstadoCandidatura.choices, default=EstadoCandidatura.PEND, max_length=20)
     data_envio = models.DateTimeField(auto_now_add=True)
     feedback_empresa = models.TextField()
-    cv = models.FileField(upload_to='cv_files', default='empty.pdf', null=True, blank=True)
+    cv = models.FileField(upload_to='cv_files', default='cv_files/empty.pdf', null=True, blank=True)
 
 
 

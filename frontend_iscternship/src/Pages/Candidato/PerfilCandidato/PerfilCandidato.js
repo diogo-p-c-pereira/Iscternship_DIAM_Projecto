@@ -16,9 +16,11 @@ const PerfilCandidato = () => {
         telefone: '',
         descricao: '',
         imagem: '',
+        cv: '',
     });
 
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedCV, setSelectedCV] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -39,6 +41,8 @@ const PerfilCandidato = () => {
         const { name, value, files } = e.target;
         if (name === 'imagem') {
             setSelectedImage(files[0]);
+        } else if (name === 'cv') {
+            setSelectedCV(files[0]);
         } else if (["username", "email", "first_name", "last_name"].includes(name)) {
             setFormData(prev => ({
                 ...prev,
@@ -51,7 +55,6 @@ const PerfilCandidato = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Usar FormData para aceitar imagem
         const data = new FormData();
         data.append('first_name', formData.user.first_name);
         data.append('last_name', formData.user.last_name);
@@ -59,6 +62,7 @@ const PerfilCandidato = () => {
         data.append('telefone', formData.telefone);
         data.append('descricao', formData.descricao);
         if (selectedImage) data.append('imagem', selectedImage);
+        if (selectedCV) data.append('cv', selectedCV);
 
         try {
             await axios.post(
@@ -80,10 +84,19 @@ const PerfilCandidato = () => {
         window.location.href = '/login';
     };
 
-    // Constrói o URL da imagem do candidato
+    // Corrigir URL da imagem
     const imgSrc = formData.imagem
-        ? (formData.imagem.startsWith('http') ? formData.imagem : `http://localhost:8000/media/${formData.imagem}`)
-        : '/default.png';
+        ? (formData.imagem.startsWith('http')
+            ? formData.imagem
+            : `http://localhost:8000/${formData.imagem}`)
+        : 'profile_pics/default.png';
+
+    // Corrigir URL do CV (só mostra link se existir e não for 'empty.pdf')
+    const cvLink = (formData.cv && !formData.cv.includes('empty.pdf'))
+        ? (formData.cv.startsWith('http')
+            ? formData.cv
+            : `http://localhost:8000/${formData.cv}`)
+        : null;
 
     return (
         <div className="register-container">
@@ -97,11 +110,59 @@ const PerfilCandidato = () => {
                         width={120}
                         height={120}
                         style={{ borderRadius: '50%', objectFit: 'cover', border: '2px solid #7d9ce4' }}
+                        onError={e => { e.target.src = '/default.png'; }}
                     />
                 </div>
-                <div className="register-field" style={{ marginBottom: 24 }}>
-                    <label>Alterar imagem de perfil</label>
-                    <input type="file" name="imagem" accept="image/*" onChange={handleChange} />
+                
+                <div className="register-field" style={{ marginBottom: 18 }}>
+                  <label htmlFor="imagem-upload" className="custom-file-label">
+                    Alterar imagem de perfil
+                  </label>
+                  <input
+                    id="imagem-upload"
+                    type="file"
+                    name="imagem"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleChange}
+                  />
+                  {selectedImage && <span>{selectedImage.name}</span>}
+                </div>
+
+                <div className="register-field" style={{ marginBottom: 18 }}>
+                  <label>CV Atual</label>
+                  {cvLink ? (
+                    <a
+                      href={cvLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ 
+                        color: "#a3b6d9",
+                        display: "block",
+                        marginBottom: 6,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      {formData.cv.split('/').pop()}
+                    </a>
+                  ) : (
+                    <span style={{ color: "#a3b6d9", fontSize: '0.95rem', marginBottom: 6 }}>
+                      Nenhum CV enviado
+                    </span>
+                  )}
+                
+                  <label htmlFor="cv-upload" className="custom-file-label">
+                    {cvLink ? "Atualizar CV" : "Adicionar CV"}
+                  </label>
+                  <input
+                    id="cv-upload"
+                    type="file"
+                    name="cv"
+                    accept=".pdf,.doc,.docx"
+                    style={{ display: "none" }}
+                    onChange={handleChange}
+                  />
+                  {selectedCV && <span style={{marginLeft: 10}}>{selectedCV.name}</span>}
                 </div>
 
                 <div style={{ display: 'flex', gap: 24 }}>

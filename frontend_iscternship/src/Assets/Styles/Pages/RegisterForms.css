@@ -94,4 +94,29 @@
   margin-top: 5px;
 }
 
+.success-message {
+  color: #9bc29b;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+input[type="file"] {
+  display: none; /* Esconde o input real */
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #7d9ce4;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+  margin-right: 10px;
+}
+.custom-file-label:hover {
+  background: #5b7fc4;
+}
+
 

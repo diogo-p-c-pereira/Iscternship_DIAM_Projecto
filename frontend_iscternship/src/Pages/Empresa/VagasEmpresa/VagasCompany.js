@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../../Assets/Styles/Pages/VagasEmpresa.css";
+import "../../../Assets/Styles/Pages/Vagas.css";
 
 const VagasEmpresa = () => {
   // Busca o user do localStorage dentro do componente:
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user.id;
-
+  const [editVaga, setEditVaga] = useState(null);
   const [vagas, setVagas] = useState([]);
   const [estadoFiltro, setEstadoFiltro] = useState("");
   const [showCriar, setShowCriar] = useState(false);
@@ -85,7 +85,7 @@ const VagasEmpresa = () => {
                 <div className="vaga-botoes">
                   <button
                     className="vaga-detalhes-btn"
-                    onClick={() => alert("Implementar navegação para detalhes depois!")}
+                    onClick={() => setEditVaga({ ...vaga })}
                   > Detalhes </button>
                   <button
                     className="vaga-remover-btn"
@@ -126,6 +126,59 @@ const VagasEmpresa = () => {
           </form>
         </div>
       )}
+
+      {editVaga && (
+        <div className="vagas-modal-bg">
+          <form className="vagas-modal-form" onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              await axios.post(`http://localhost:8000/db_iscternship/editarVaga/${editVaga.id}/`, editVaga);
+              setVagas(vagas.map(v => v.id === editVaga.id ? editVaga : v));
+              setEditVaga(null);
+            } catch {
+              alert("Erro ao editar vaga!");
+            } finally {
+            }
+          }}>
+            <h2>Editar vaga</h2>
+            <div className="register-field">
+              <label>Título</label>
+              <input type="text" value={editVaga.titulo}
+                onChange={e => setEditVaga(v => ({ ...v, titulo: e.target.value }))} required />
+            </div>
+            <div className="register-field">
+              <label>Descrição</label>
+              <textarea value={editVaga.descricao}
+                onChange={e => setEditVaga(v => ({ ...v, descricao: e.target.value }))} required />
+            </div>
+            <div className="register-field">
+              <label>Estado</label>
+              <select
+                className="vagas-estado-dropdown"
+                value={editVaga.estado}
+                onChange={e => setEditVaga(v => ({ ...v, estado: e.target.value }))}
+              >
+                <option value="Aberta">Aberta</option>
+                <option value="Fechada">Fechada</option>
+              </select>
+            </div>
+            <div className="register-button-container">
+              <button
+                type="button"
+                className="register-button"
+                style={{ background: "#8999c5" }}
+                onClick={() => setEditVaga(null)}
+              >
+                Cancelar
+              </button>
+              <button type="submit" className="register-button">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
     </div>
   );
 };

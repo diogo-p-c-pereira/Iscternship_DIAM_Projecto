@@ -23,6 +23,21 @@ def removerVagaEmpresa(request, vaga_id):
     vaga.delete()
     return Response({'success': 'Vaga removida com sucesso.'}, status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['POST'])
+def editarVagaEmpresa(request, vaga_id):
+    try:
+        vaga = Vaga.objects.get(pk=vaga_id)
+    except Vaga.DoesNotExist:
+        return Response({'error': 'Vaga não encontrada.'}, status=404)
+
+    vaga.titulo = request.data.get('titulo', vaga.titulo)
+    vaga.descricao = request.data.get('descricao', vaga.descricao)
+    vaga.estado = request.data.get('estado', vaga.estado)
+    vaga.save()
+
+    serializer = VagaSerializer(vaga)
+    return Response(serializer.data, status=200)
+
 
 @api_view(['POST'])
 def criarVagaEmpresa(request, user_id):
@@ -76,11 +91,31 @@ def verVagasEmpresa(request, empresa_id):
         })
     return Response(vagas_data)
 
+@api_view(['GET'])
+def vagasCandidato(request):
+    vagas = Vaga.objects.all()
+    vagas_data = []
+    for vaga in vagas:
+        n_candidatos = Candidatura.objects.filter(vaga=vaga).count()
+        empresa = vaga.empresa
+        vagas_data.append({
+            "id": vaga.id,
+            "titulo": vaga.titulo,
+            "descricao": vaga.descricao,
+            "estado": vaga.estado,
+            "isReportada": vaga.isReportada,
+            "n_candidatos": n_candidatos,
+            "empresa_nome": empresa.nome_empresa,
+            "empresa_morada": empresa.morada,
+            "empresa_telefone": empresa.telefone,
+            "empresa_imagem": empresa.imagem.url if empresa.imagem else None
+        })
+    return Response(vagas_data)
+
 
 
 @api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser])
-#@permission_classes([IsAuthenticated])
 def candidato(request, candidato_id):
     try:
         candidato = Candidato.objects.get(user__id=candidato_id)
@@ -92,11 +127,20 @@ def candidato(request, candidato_id):
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        # Atualiza primeiro os campos do User
+        user = candidato.user
+        user.first_name = request.data.get('first_name', user.first_name)
+        user.last_name = request.data.get('last_name', user.last_name)
+        user.email = request.data.get('email', user.email)
+        user.save()
+
+        # Atualiza o Candidato
         serializer = CandidatoSerializer(candidato, data=request.data, partial=True)  # permite atualizar parcialmente
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['GET'])
@@ -134,22 +178,31 @@ def deleteCandidato(request, candidato_id):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'POST'])  # (2)
+@api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser])
-#@permission_classes([IsAuthenticated])
 def empresa(request, empresa_id):
-    if request.method == 'GET':  # (3)
-        empresa = Empresa.objects.get(pk=empresa_id)
+    try:
+        empresa = Empresa.objects.get(user__id=empresa_id)
+    except Empresa.DoesNotExist:
+        return Response({'error': 'Empresa não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
         serializer = EmpresaSerializer(empresa)
         return Response(serializer.data)
 
-    elif request.method == 'POST':  # (3)
-        serializer = EmpresaSerializer(data=request.data)
+    elif request.method == 'POST':
+        # Atualiza primeiro o User (email)
+        user = empresa.user
+        user.email = request.data.get('email', user.email)
+        user.save()
 
+        # Atualiza Empresa
+        serializer = EmpresaSerializer(empresa, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def signupCandidato(request):

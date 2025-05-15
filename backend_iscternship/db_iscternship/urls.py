@@ -15,11 +15,14 @@ urlpatterns = [
  path('verCandidatos/', views.verCandidatos),
  path('empresa/<int:empresa_id>', views.empresa),
 
- path('verVaga/<int:vaga_id>', views.verVaga),
+ # Candidato
+ path('vagas/', views.vagasCandidato),
+
 
  # Empresa
  path('vagasEmpresa/<int:empresa_id>/', views.verVagasEmpresa),
  path('criarVagaEmpresa/<int:user_id>/', views.criarVagaEmpresa),
  path('removerVaga/<int:vaga_id>/', views.removerVagaEmpresa),
+ path('editarVaga/<int:vaga_id>/', views.editarVagaEmpresa),
 
 ]

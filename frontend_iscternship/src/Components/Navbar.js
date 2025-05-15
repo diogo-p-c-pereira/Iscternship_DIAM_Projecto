@@ -15,8 +15,7 @@ const routes = [
 ];
 
 const routesCandidato = [
-  { path: '/LoginSucesso', label: 'Vagas' },
-  { path: '/', label: 'Candidaturas' },
+  { path: '/VagasCandidato', label: 'Vagas' },
   { path: '/PerfilCandidato', label: 'Perfil' },
 ]
 
