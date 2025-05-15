@@ -17,7 +17,7 @@ import RegisterEmpresa from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.
 
 // Admin
 import ListCandidates from './Pages/Admin/ListCandidates';
-import DetailCandidates from './Pages/Admin/DetailCandidates';
+//import DetailCandidates from './Pages/Admin/DetailCandidates';
 
 // Candidato
 import PerfilCandidato from './Pages/Candidato/PerfilCandidato/PerfilCandidatoPage.js';
@@ -48,7 +48,6 @@ function App() {
               <Route path="/register" element={<RegisterCandidato />} />
               <Route path="/companies" element={<RegisterEmpresa />} />
               <Route path="/listCandidates" element = {user?(user.is_superuser?<ListCandidates />:<Home/>): <Login/>} />
-                <Route path="/detailCandidates/:candidatoId" element = {user?(user.is_superuser?<DetailCandidates />:<Home/>): <Login/>} />
               <Route path="/VagasEmpresa" element = {user?(user.is_staff?<VagasEmpresa/>:<Home/>): <Login/>} />
               <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
