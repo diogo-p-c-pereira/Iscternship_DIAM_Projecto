@@ -42,7 +42,7 @@ def editarVagaEmpresa(request, vaga_id):
 @api_view(['POST'])
 def criarVagaEmpresa(request, user_id):
     try:
-        empresa = Empresa.objects.get(user=user_id)
+        empresa = Empresa.objects.get(user__id=user_id)
     except Empresa.DoesNotExist:
         return Response({'error': 'Empresa não encontrada.'}, status=404)
 
@@ -74,7 +74,7 @@ def criarVagaEmpresa(request, user_id):
 @api_view(['GET'])
 def verVagasEmpresa(request, empresa_id):
     try:
-        empresa = Empresa.objects.get(user=empresa_id)
+        empresa = Empresa.objects.get(user__id=empresa_id)
     except Empresa.DoesNotExist:
         return Response({'error': 'Empresa não encontrada.'}, status=404)
     vagas = Vaga.objects.filter(empresa=empresa)
