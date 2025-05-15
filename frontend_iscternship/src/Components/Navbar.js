@@ -20,9 +20,17 @@ const routesCandidato = [
   { path: '/PerfilCandidato', label: 'Perfil' },
 ]
 
+const routesEmpresa = [
+  { path: '/LoginSucesso', label: 'LoginSucessoEmpresa' },
+]
+
+const routesAdmin = [
+  { path: '/LoginSucesso', label: 'LoginSucessoAdmin' },
+]
+
 const Navbar = () => {
   const {user, setUser} = useUserContext();
-  const r = user? routesCandidato : routes
+  const r = user? (user.is_superuser || user.is_staff ? (user.is_staff? routesEmpresa : routesAdmin) : routesCandidato ) : routes;
 
   return (
     <nav className="navbar navbar-expand-lg justify-content-center custom-navbar">
