@@ -8,5 +8,5 @@
 (7) >npm install framer-motion 
 
 {BACKEND}
-(1) > python manage.py runserver // correr o server
-
+(1) > pip install Pillow
+(2) > python manage.py runserver // correr o server
