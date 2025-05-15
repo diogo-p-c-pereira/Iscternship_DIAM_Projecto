@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../../Assets/Styles/Pages/RegisterForms.css';
+import {useNavigate, Link} from "react-router-dom";
 
 const PerfilEmpresa = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const empresaId = user.id;
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         user: {
@@ -67,6 +69,7 @@ const PerfilEmpresa = () => {
             );
             setSuccessMessage('Perfil da empresa atualizado com sucesso!');
             setErrorMessage('');
+            navigate(0);
         } catch (error) {
             setErrorMessage('Erro ao guardar as alterações.');
             setSuccessMessage('');

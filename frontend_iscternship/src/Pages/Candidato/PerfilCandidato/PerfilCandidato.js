@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import {useNavigate, Link} from "react-router-dom";
 import axios from 'axios';
 import '../../../Assets/Styles/Pages/RegisterForms.css';
 
 const PerfilCandidato = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const candidatoId = user.id;
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         user: {
@@ -72,6 +74,7 @@ const PerfilCandidato = () => {
             );
             setSuccessMessage('Perfil atualizado com sucesso!');
             setErrorMessage('');
+            navigate(0);
         } catch (error) {
             setErrorMessage('Erro ao guardar as alterações.');
             setSuccessMessage('');
