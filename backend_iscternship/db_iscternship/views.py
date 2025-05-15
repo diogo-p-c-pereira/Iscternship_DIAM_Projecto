@@ -8,6 +8,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.decorators import api_view, permission_classes, parser_classes
+from rest_framework.parsers import MultiPartParser
 
 # Create your views here.
 @api_view(['DELETE'])
@@ -74,8 +77,10 @@ def verVagasEmpresa(request, empresa_id):
     return Response(vagas_data)
 
 
-#@permission_classes([IsAuthenticated])
+
 @api_view(['GET', 'POST'])
+@parser_classes([MultiPartParser])
+#@permission_classes([IsAuthenticated])
 def candidato(request, candidato_id):
     try:
         candidato = Candidato.objects.get(user__id=candidato_id)
@@ -103,6 +108,7 @@ def verVaga(request, vaga_id):
 
 
 @api_view(['GET'])  # (2)
+@parser_classes([MultiPartParser])
 #@permission_classes([IsAuthenticated])
 def candidatoAdmin(request, candidato_id):
     candidato = Candidato.objects.get(pk=candidato_id)
@@ -111,6 +117,7 @@ def candidatoAdmin(request, candidato_id):
 
 
 @api_view(['GET'])
+@parser_classes([MultiPartParser])
 #@permission_classes([]) fazer permissões só superuser
 def verCandidatos(request):
     candidato = Candidato.objects.all()
@@ -128,6 +135,7 @@ def deleteCandidato(request, candidato_id):
 
 
 @api_view(['GET', 'POST'])  # (2)
+@parser_classes([MultiPartParser])
 #@permission_classes([IsAuthenticated])
 def empresa(request, empresa_id):
     if request.method == 'GET':  # (3)

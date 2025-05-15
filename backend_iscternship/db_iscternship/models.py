@@ -8,6 +8,9 @@ class Candidato(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     descricao = models.TextField()
     telefone = models.CharField(max_length=12, default=None)
+    imagem = models.ImageField(upload_to= 'profile_pics', default='default.png')
+    cv = models.FileField(upload_to= 'cv_files', default='default.pdf')
+
 
 
 
@@ -17,6 +20,7 @@ class Empresa(models.Model):
     morada = models.CharField(max_length=100)
     telefone = models.CharField(max_length=12, default=None)
     is_approved = models.BooleanField(default=False)
+    imagem = models.ImageField(upload_to='profile_pics', default='default.png')
 
 
 class Review(models.Model):
