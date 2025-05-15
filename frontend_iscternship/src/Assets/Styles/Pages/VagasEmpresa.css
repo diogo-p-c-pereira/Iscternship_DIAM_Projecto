@@ -1,0 +1,187 @@
+/* Container geral da página de vagas */
+.vagas-empresa-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 70vh;
+  padding: 40px 0 0 0;
+  background: none;
+}
+
+/* Linha de filtro + botão criar */
+.vagas-filtros {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 65%;
+  margin: 0 auto 15px auto;
+  gap: 18px;
+}
+
+/* Dropdown de estado */
+.vagas-estado-dropdown {
+  background: #5a769c;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 7px 22px;
+  font-size: 17px;
+  min-width: 160px;
+  outline: none;
+  font-weight: 500;
+}
+
+.vagas-estado-dropdown:focus {
+  box-shadow: 0 0 0 2px #cfd8ff;
+}
+
+/* Botão Criar Vaga */
+.vagas-criar-btn {
+  background-color: #7d9ce4;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 34px;
+  font-size: 18px;
+  transition: background 0.18s;
+  box-shadow: 0 2px 6px #2330522a;
+}
+.vagas-criar-btn:hover {
+  background-color: #5b7fc4;
+}
+
+/* Caixa de vagas geral */
+.vagas-lista-box {
+  width: 70%;
+  margin: 0 auto;
+  background: #232f3e;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px #232f3e20;
+  padding: 20px 20px 20px 20px;
+  max-height: 520px;        /* Limita a altura máxima da caixa */
+  overflow-y: auto;         /* Adiciona scroll vertical quando precisa */
+  min-height: 80px;         /* Opcional: altura mínima */
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  scroll-behavior: smooth;
+}
+
+.vagas-lista-box::-webkit-scrollbar {
+  width: 10px;
+  background: #2a3950;  
+  border-radius: 10px;
+}
+
+.vagas-lista-box::-webkit-scrollbar-thumb {
+  background: #6c7fa3;   
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+
+/* Cada vaga */
+.vaga-card {
+  background: #2b3952;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 18px 32px 18px 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 6px #2228;
+}
+
+.vaga-card:last-child {
+  margin-bottom: 0;
+}
+
+.vaga-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vaga-titulo {
+  font-weight: 600;
+  font-size: 1.18rem;
+  color: #e7eefe;
+  margin-bottom: 3px;
+}
+
+.vaga-detalhes-btn {
+  background: #8197bd;
+  color: white;
+  border: none;
+  border-radius: 11px;
+  padding: 8px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.18s;
+  margin-left: 14px;
+}
+.vaga-detalhes-btn:hover {
+  background: #627bb2;
+}
+
+.vaga-botoes {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+
+.vaga-remover-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 11px;
+  padding: 8px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.18s;
+}
+
+.vaga-remover-btn:hover {
+  background: #d63f3f;
+}
+
+/* Modal criar vaga */
+.vagas-modal-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(20,30,50,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.vagas-modal-form {
+  background: #1f2b3e;
+  border-radius: 14px;
+  padding: 38px 32px 32px 32px;
+  box-shadow: 0 0 18px #2229;
+  width: 370px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.vagas-modal-form h2 {
+  text-align: center;
+  margin-bottom: 23px;
+}
+
+.vagas-modal-form .register-field {
+  width: 100%;
+}
+
+.vagas-modal-form .register-button-container {
+  margin-top: 18px;
+  gap: 8px;
+  justify-content: space-between;
+}

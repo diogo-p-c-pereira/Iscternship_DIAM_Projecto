@@ -20,6 +20,11 @@ import DetailCandidates from './Pages/Admin/DetailCandidates';
 import LoginSucesso from './Pages/LoginSucesso.js';
 import Candidatar from './Pages/Candidato/Candidatar'
 
+// Empresa
+import VagasEmpresa from './Pages/Empresa/VagasEmpresa/VagasPageCompany.js';
+
+
+
 function App() {
   // Use the useLocation hook to get the current location
   const location = useLocation();
@@ -39,6 +44,7 @@ function App() {
               <Route path="/companies" element={<ForCompanies />} />
               <Route path="/listCandidates" element = {<ListCandidates />} />
               <Route path="/LoginSucesso" element = {<LoginSucesso />} />
+              <Route path="/VagasEmpresa" element = {<VagasEmpresa />} />
               <Route path="/PerfilCandidato" element = {<PerfilCandidato />} />
               <Route path="/detailCandidates/:candidatoId" element = {<DetailCandidates />} />
               <Route path="/Candidatar/:vagaId" element = {<Candidatar />} />

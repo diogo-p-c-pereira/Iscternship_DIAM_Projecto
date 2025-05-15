@@ -10,7 +10,68 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 # Create your views here.
+@api_view(['DELETE'])
+def removerVagaEmpresa(request, vaga_id):
+    try:
+        vaga = Vaga.objects.get(pk=vaga_id)
+    except Vaga.DoesNotExist:
+        return Response({'error': 'Vaga não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+    
+    vaga.delete()
+    return Response({'success': 'Vaga removida com sucesso.'}, status=status.HTTP_204_NO_CONTENT)
 
+
+@api_view(['POST'])
+def criarVagaEmpresa(request, user_id):
+    try:
+        empresa = Empresa.objects.get(user__id=user_id)
+    except Empresa.DoesNotExist:
+        return Response({'error': 'Empresa não encontrada.'}, status=404)
+
+    titulo = request.data.get('titulo')
+    descricao = request.data.get('descricao')
+    estado = request.data.get('estado', 'Aberta')
+    isReportada = request.data.get('isReportada', False)
+
+    if not titulo or not descricao:
+        return Response({'error': 'Título e descrição são obrigatórios.'}, status=400)
+
+    vaga = Vaga.objects.create(
+        empresa=empresa,
+        titulo=titulo,
+        descricao=descricao,
+        estado=estado,
+        isReportada=isReportada
+    )
+
+    return Response({
+        'id': vaga.id,
+        'titulo': vaga.titulo,
+        'descricao': vaga.descricao,
+        'estado': vaga.estado,
+        'isReportada': vaga.isReportada,
+        'n_candidatos': 0
+    }, status=201)
+
+@api_view(['GET'])
+def verVagasEmpresa(request, empresa_id):
+    try:
+        empresa = Empresa.objects.get(user__id=empresa_id)
+    except Empresa.DoesNotExist:
+        return Response({'error': 'Empresa não encontrada.'}, status=404)
+    vagas = Vaga.objects.filter(empresa=empresa)
+    vagas_data = []
+    for vaga in vagas:
+        n_candidatos = Candidatura.objects.filter(vaga=vaga).count()
+        vagas_data.append({
+            "id": vaga.id,
+            "titulo": vaga.titulo,
+            "descricao": vaga.descricao,
+            "estado": vaga.estado,
+            "isReportada": vaga.isReportada,
+            "n_candidatos": n_candidatos,
+        })
+    return Response(vagas_data)
 
 
 #@permission_classes([IsAuthenticated])

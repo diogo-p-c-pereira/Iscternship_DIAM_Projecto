@@ -21,7 +21,8 @@ const routesCandidato = [
 ]
 
 const routesEmpresa = [
-  { path: '/LoginSucesso', label: 'LoginSucessoEmpresa' },
+  { path: '/VagasEmpresa', label: 'Vagas' },
+  { path: '/PerfilEmpresa', label: 'Perfil' },
 ]
 
 const routesAdmin = [
