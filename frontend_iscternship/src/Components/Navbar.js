@@ -25,7 +25,7 @@ const routesEmpresa = [
 ]
 
 const routesAdmin = [
-  { path: '/LoginSucesso', label: 'LoginSucessoAdmin' },
+  { path: '/listCandidates', label: 'Candidatos' },
 ]
 
 const Navbar = () => {

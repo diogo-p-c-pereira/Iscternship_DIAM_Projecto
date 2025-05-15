@@ -61,7 +61,7 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:8000/db_iscternship/login/', formData , {withCredentials: true});
       // localStorage.setItem("user", JSON.stringify(response.data.user));
       setUser(response.data); // cookies
-      navigate('/Perfil'); // Redirecionar para a página inicial ou outra página desejada
+      user.is_staff? navigate('/PerfilEmpresa'): (user.is_superuser? navigate(-1): navigate('/PerfilCandidato'));
       console.log(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
