@@ -13,8 +13,10 @@ from django.contrib.auth.models import User
 
 
 
-#@permission_classes([IsAuthenticated])
+
 @api_view(['GET', 'POST'])
+@parser_classes([MultiPartParser])
+#@permission_classes([IsAuthenticated])
 def candidato(request, candidato_id):
     try:
         candidato = Candidato.objects.get(user__id=candidato_id)
@@ -42,6 +44,7 @@ def verVaga(request, vaga_id):
 
 
 @api_view(['GET'])  # (2)
+@parser_classes([MultiPartParser])
 #@permission_classes([IsAuthenticated])
 def candidatoAdmin(request, candidato_id):
     candidato = Candidato.objects.get(pk=candidato_id)
@@ -50,6 +53,7 @@ def candidatoAdmin(request, candidato_id):
 
 
 @api_view(['GET'])
+@parser_classes([MultiPartParser])
 #@permission_classes([]) fazer permissões só superuser
 def verCandidatos(request):
     candidato = Candidato.objects.all()
@@ -67,6 +71,7 @@ def deleteCandidato(request, candidato_id):
 
 
 @api_view(['GET', 'POST'])  # (2)
+@parser_classes([MultiPartParser])
 #@permission_classes([IsAuthenticated])
 def empresa(request, empresa_id):
     if request.method == 'GET':  # (3)
