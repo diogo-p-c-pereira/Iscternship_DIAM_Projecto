@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../../../Assets/Styles/Pages/RegisterForms.css';
+import {useParams, useNavigate, Link} from "react-router-dom";
 import axios from 'axios';
 
 const ForCompanies = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -95,6 +97,7 @@ const ForCompanies = () => {
     try {
       await axios.post('http://localhost:8000/db_iscternship/signupEmpresa/', dataToSend);
       alert('Empresa registada com sucesso!');
+      navigate('/login')
     } catch (error) {
       if (error.response?.data?.error) {
         alert(`Erro ao registar: ${error.response.data.error}`);

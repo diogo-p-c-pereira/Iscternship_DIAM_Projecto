@@ -61,9 +61,9 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:8000/db_iscternship/login/', formData , {withCredentials: true});
       // localStorage.setItem("user", JSON.stringify(response.data.user));
       setUser(response.data); // cookies
-      user.is_staff? navigate('/PerfilEmpresa'): (user.is_superuser? navigate(-1): navigate('/PerfilCandidato'));
+      user.is_staff? navigate('/PerfilEmpresa'): (user.is_superuser? navigate(-1): navigate('/PerfilCandidato')); //TODO superuser
       console.log(response.data);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      //TODO localStorage.setItem("user", JSON.stringify(response.data));
       // TODO: guardar o estado de login , cookies, ou redirecionar o utilizador para outra página
     } catch (error) {
       alert('Erro ao fazer login. Verifique o seu username e password.');

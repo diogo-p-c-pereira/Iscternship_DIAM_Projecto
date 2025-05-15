@@ -44,7 +44,7 @@ const formatDate = (dateString) => {
   return (
       <div className="container mt-4" style={{paddingTop: "2%"}}>
           <h3>Detalhe do Candidato</h3>
-          <img src={"http://127.0.0.1:8000" + candidato.imagem} alt="imagem" height="150px"/><br/>
+          <img src={"http://localhost:8000" + candidato.imagem} alt="imagem" height="150px"/><br/>
           <h5> Username: {candidato.user.username} <br/>
               Primeiro Nome: {candidato.user.first_name} <br/>
               Último Nome: {candidato.user.last_name} <br/>
