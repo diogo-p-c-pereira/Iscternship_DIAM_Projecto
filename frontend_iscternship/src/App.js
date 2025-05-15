@@ -10,13 +10,13 @@ import {useUserContext} from "./UserProvider";
 import './Assets/App.css';
 
 // Login , Signup, Logout
-import Home from './Pages/Home';
+import Home from './Pages/HomePage';
 import Login from './Pages/Login/Login.js';
 import RegisterCandidato from './Pages/Candidato/RegistoCandidato/RegisterPageCandidate.js';
 import RegisterEmpresa from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.js';
 
 // Admin
-import ListCandidates from './Pages/Admin/ListCandidates';
+import ListCandidatesPage from './Pages/Admin/ListCandidatesPage';
 //import DetailCandidates from './Pages/Admin/DetailCandidates';
 
 // Candidato
@@ -43,11 +43,11 @@ function App() {
       <main className="main-content">
         <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home/>} />
               <Route path="/login" element={user?<Home/>:<Login />} />
               <Route path="/register" element={<RegisterCandidato />} />
               <Route path="/companies" element={<RegisterEmpresa />} />
-              <Route path="/listCandidates" element = {user?(user.is_superuser?<ListCandidates />:<Home/>): <Login/>} />
+              <Route path="/listCandidates" element = {user?(user.is_superuser?<ListCandidatesPage />:<Home/>): <Login/>} />
               <Route path="/VagasEmpresa" element = {user?(user.is_staff?<VagasEmpresa/>:<Home/>): <Login/>} />
               <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
