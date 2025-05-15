@@ -9,6 +9,7 @@ class Candidato(models.Model):
     descricao = models.TextField()
     telefone = models.CharField(max_length=12, default=None)
     imagem = models.ImageField(upload_to= 'profile_pics', default='default.png')
+    cv = models.FileField(upload_to= 'cv_files', default='default.pdf')
 
 
 
