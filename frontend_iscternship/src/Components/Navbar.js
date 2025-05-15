@@ -15,16 +15,19 @@ const routes = [
 ];
 
 const routesCandidato = [
+    { path: '/', label: 'Home' },
   { path: '/VagasCandidato', label: 'Vagas' },
   { path: '/PerfilCandidato', label: 'Perfil' },
 ]
 
 const routesEmpresa = [
+    { path: '/', label: 'Home' },
   { path: '/VagasEmpresa', label: 'Vagas' },
   { path: '/PerfilEmpresa', label: 'Perfil' },
 ]
 
 const routesAdmin = [
+    { path: '/', label: 'Home' },
   { path: '/listCandidates', label: 'Candidatos' },
 ]
 

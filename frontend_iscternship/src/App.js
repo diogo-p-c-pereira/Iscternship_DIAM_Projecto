@@ -44,16 +44,16 @@ function App() {
         <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={user?<Home/>:<Login />} />
               <Route path="/register" element={<RegisterCandidato />} />
               <Route path="/companies" element={<RegisterEmpresa />} />
-              <Route path="/listCandidates" element = {<ListCandidates />} />
-              <Route path="/VagasEmpresa" element = {<VagasEmpresa />} />
-              <Route path="/PerfilEmpresa" element = {<PerfilEmpresa />} />
-              <Route path="/PerfilCandidato" element = {<PerfilCandidato />} />
-              <Route path="/VagasCandidato" element = {<VagasCandidato />} />
-              <Route path="/detailCandidates/:candidatoId" element = {<DetailCandidates />} />
-              <Route path="/Candidatar/:vagaId" element = {<Candidatar />} />
+              <Route path="/listCandidates" element = {user?(user.is_superuser?<ListCandidates />:<Home/>): <Login/>} />
+                <Route path="/detailCandidates/:candidatoId" element = {user?(user.is_superuser?<DetailCandidates />:<Home/>): <Login/>} />
+              <Route path="/VagasEmpresa" element = {user?(user.is_staff?<VagasEmpresa/>:<Home/>): <Login/>} />
+              <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
+              <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
+              <Route path="/VagasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<VagasCandidato />): <Login/>} />
+              <Route path="/Candidatar/:vagaId" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<Candidatar />): <Login/>} />
             </Routes>
         </AnimatePresence>
       </main>
