@@ -54,6 +54,7 @@ class Candidatura(models.Model):
     estado = models.CharField(choices=EstadoCandidatura.choices, default=EstadoCandidatura.PEND, max_length=20)
     data_envio = models.DateTimeField(auto_now_add=True)
     feedback_empresa = models.TextField()
+    cv = models.FileField(upload_to='cv_files', default='empty.pdf', null=True, blank=True)
 
 
 
