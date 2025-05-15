@@ -6,8 +6,8 @@ import { Button } from "reactstrap";
 
 function Candidatar() {
 
-  const URL_VAGA = "http://localhost:8000/db_iscternship/api/verVaga/"; // (1)
-    const URL_CANDIDATURA = "http://localhost:8000/db_iscternship/api/candidatura/";
+  const URL_VAGA = "http://localhost:8000/db_iscternship/verVaga/"; // (1)
+    const URL_CANDIDATURA = "http://localhost:8000/db_iscternship/candidatura/";
 
     const { vagaId } = useParams();
   const [vaga, setVaga] = useState([]); // (2)

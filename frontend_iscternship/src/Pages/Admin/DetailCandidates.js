@@ -5,8 +5,8 @@ import { Button } from "reactstrap";
 
 function DetailCandidates() {
 
-  const URL_CANDIDATOS = "http://localhost:8000/db_iscternship/api/candidatoAdmin/"; // (1)
-    const URL_DELETECANDIDATO = "http://localhost:8000/db_iscternship/api/deleteCandidato/";
+  const URL_CANDIDATOS = "http://localhost:8000/db_iscternship/candidatoAdmin/"; // (1)
+    const URL_DELETECANDIDATO = "http://localhost:8000/db_iscternship/deleteCandidato/";
 
     const { candidatoId } = useParams();
   const [candidato, setCandidato] = useState([]); // (2)

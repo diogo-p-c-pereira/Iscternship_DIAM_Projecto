@@ -18,7 +18,7 @@ import ForCompanies from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.js'
 import ListCandidates from './Pages/Admin/ListCandidates';
 import DetailCandidates from './Pages/Admin/DetailCandidates';
 import LoginSucesso from './Pages/LoginSucesso.js';
-import Candidatar from './Pages/ForCandidates/Candidatar'
+import Candidatar from './Pages/Candidato/Candidatar'
 
 function App() {
   // Use the useLocation hook to get the current location
