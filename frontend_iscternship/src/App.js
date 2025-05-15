@@ -12,8 +12,9 @@ import './Assets/App.css';
 // Importar páginas individuais
 import Home from './Pages/Home';
 import Login from './Pages/Login/Login.js';
-import Register from './Pages/ForCandidates/RegisterPageCandidate.js';
-import ForCompanies from './Pages/ForCompanies/RegisterPageCompany.js';
+import Register from './Pages/Candidato/RegistoCandidato/RegisterPageCandidate.js';
+import PerfilCandidato from './Pages/Candidato/PerfilCandidato/PerfilCandidato.js';
+import ForCompanies from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.js';
 import ListCandidates from './Pages/Admin/ListCandidates';
 import DetailCandidates from './Pages/Admin/DetailCandidates';
 import LoginSucesso from './Pages/LoginSucesso.js';
@@ -38,6 +39,7 @@ function App() {
               <Route path="/companies" element={<ForCompanies />} />
               <Route path="/listCandidates" element = {<ListCandidates />} />
               <Route path="/LoginSucesso" element = {<LoginSucesso />} />
+              <Route path="/PerfilCandidato" element = {<PerfilCandidato />} />
               <Route path="/detailCandidates/:candidatoId" element = {<DetailCandidates />} />
               <Route path="/Candidatar/:vagaId" element = {<Candidatar />} />
             </Routes>

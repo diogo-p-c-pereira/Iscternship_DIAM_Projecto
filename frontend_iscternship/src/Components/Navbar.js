@@ -15,8 +15,9 @@ const routes = [
 ];
 
 const routesCandidato = [
-  { path: '/LoginSucesso', label: 'Sucesso' },
-  { path: '/', label: 'Home' },
+  { path: '/LoginSucesso', label: 'Vagas' },
+  { path: '/', label: 'Candidaturas' },
+  { path: '/PerfilCandidato', label: 'Perfil' },
 ]
 
 const Navbar = () => {

@@ -12,21 +12,26 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 
-@api_view(['GET', 'POST'])  # (2)
+
 #@permission_classes([IsAuthenticated])
+@api_view(['GET', 'POST'])
 def candidato(request, candidato_id):
-    if request.method == 'GET':  # (3)
-        candidato = Candidato.objects.get(pk=candidato_id)
+    try:
+        candidato = Candidato.objects.get(user__id=candidato_id)
+    except Candidato.DoesNotExist:
+        return Response({'error': 'Candidato não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
         serializer = CandidatoSerializer(candidato)
         return Response(serializer.data)
 
-    elif request.method == 'POST':  # (3)
-        serializer = CandidatoSerializer(data=request.data)
-
+    elif request.method == 'POST':
+        serializer = CandidatoSerializer(candidato, data=request.data, partial=True)  # permite atualizar parcialmente
         if serializer.is_valid():
             serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 #@permission_classes([]) fazer permissões só superuser
