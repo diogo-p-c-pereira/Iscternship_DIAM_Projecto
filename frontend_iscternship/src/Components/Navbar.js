@@ -17,6 +17,7 @@ const routes = [
 const routesCandidato = [
     { path: '/', label: 'Home' },
   { path: '/VagasCandidato', label: 'Vagas' },
+    { path: '/CandidaturasCandidato', label: 'Candidaturas' },
   { path: '/PerfilCandidato', label: 'Perfil' },
 ]
 

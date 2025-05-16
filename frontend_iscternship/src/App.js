@@ -23,6 +23,7 @@ import ListCandidatesPage from './Pages/Admin/ListCandidatesPage';
 import PerfilCandidato from './Pages/Candidato/PerfilCandidato/PerfilCandidatoPage.js';
 import Candidatar from './Pages/Candidato/Candidatar'
 import VagasCandidato from './Pages/Candidato/VerVagas/VagasCandidatoPage.js';
+import CandidaturasCandidato from './Pages/Candidato/VerCandidaturas/CandidaturasCandidatoPage';
 
 // Empresa
 import VagasEmpresa from './Pages/Empresa/VagasEmpresa/VagasPageCompany.js';
@@ -52,6 +53,7 @@ function App() {
               <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
               <Route path="/VagasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<VagasCandidato />): <Login/>} />
+                <Route path="/CandidaturasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<CandidaturasCandidato />): <Login/>} />
               <Route path="/Candidatar/:vagaId" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<Candidatar />): <Login/>} />
             </Routes>
         </AnimatePresence>
