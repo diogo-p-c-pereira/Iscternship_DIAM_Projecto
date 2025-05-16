@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../Assets/Styles/Pages/Vagas.css";
+import MapComponent from '../../MapComponent'
 
 const VagasCandidato = () => {
   const [vagas, setVagas] = useState([]);
@@ -85,6 +86,7 @@ const VagasCandidato = () => {
                 {vagaDetalhe.descricao}
               </div>
             </div>
+              <MapComponent address={vagaDetalhe.empresa_morada} />
             <button
               type="button"
               className="register-button vagas-modal-fechar"
