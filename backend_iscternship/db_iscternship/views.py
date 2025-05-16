@@ -168,12 +168,29 @@ def verCandidatos(request):
     serializer = CandidatoSerializerAdmin(candidato, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@parser_classes([MultiPartParser])
+#@permission_classes([]) fazer permissões só superuser
+def verEmpresas(request):
+    empresa = Empresa.objects.all()
+    serializer = EmpresaSerializerAdmin(empresa, many=True)
+    return Response(serializer.data)
+
 @api_view(["DELETE"])
 #@permission_classes([]) fazer permissões só superuser
 def deleteCandidato(request, candidato_id):
     candidato = Candidato.objects.get(pk=candidato_id)
     user = User.objects.get(pk=candidato.user_id)
     candidato.delete()
+    user.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(["DELETE"])
+#@permission_classes([]) fazer permissões só superuser
+def deleteEmpresa(request, empresa_id):
+    empresa = Empresa.objects.get(pk=empresa_id)
+    user = User.objects.get(pk=empresa.user_id)
+    empresa.delete()
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 

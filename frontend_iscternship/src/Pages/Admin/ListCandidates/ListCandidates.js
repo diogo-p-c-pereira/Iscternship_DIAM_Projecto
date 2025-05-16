@@ -11,6 +11,7 @@ function ListCandidates() {
       const navigate = useNavigate();
 
       const formatDate = (dateString) => {
+          if (!dateString) {return("Nunca")}
     return new Date(dateString).toLocaleDateString("pt-PT", {
         year: "numeric",
         month: "long",
@@ -28,6 +29,7 @@ function ListCandidates() {
       }).catch(error => (alert(error)));
   };
 
+  const [pesquisa, setPesquisa] = useState("");
 const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
 
   useEffect(() => { // (4)
@@ -38,18 +40,29 @@ const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
       axios.delete(URL_DELETECANDIDATO + id).then(navigate(0))
   }
 
-  const centered = { textAlign: "center" };
-//TODO Ver permissões só Admin
+
+    const candidatosFiltrados = candidatosList.filter(c =>
+        (c.user).username.toLowerCase().includes(pesquisa.trim().toLowerCase())
+  );
 
     if (!candidatosList) return <p>A carregar dados...</p>;
-    
+
   return (
       <div className="vagas-empresa-container">
+          <div className="vagas-filtros">
+              <input
+                  type="text"
+                  className="vagas-barra-pesquisa"
+                  placeholder="Pesquisar candidato por username..."
+                  value={pesquisa}
+                  onChange={e => setPesquisa(e.target.value)}
+              />
+          </div>
           <div className="vagas-lista-box">
-              {candidatosList.length === 0 ? (
+              {candidatosFiltrados.length === 0 ? (
                   <p style={{color: "#fff", textAlign: "center"}}>Sem candidatos para mostrar.</p>
               ) : (
-                  candidatosList.map((c) => (
+                  candidatosFiltrados.map((c) => (
                       <div key={c.id} className="vaga-card">
                           <div className="vaga-info">
                               <div className="vaga-titulo">{c.user.first_name} {c.user.last_name}</div>
@@ -121,8 +134,7 @@ const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
                   </div>
               </div>
           )}
-      </div>
-  );
+      </div>);
 }
 
 
