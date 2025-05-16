@@ -44,84 +44,84 @@ const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
     if (!candidatosList) return <p>A carregar dados...</p>;
     
   return (
-      <>
-      <Table light="true"> {/* (5) */}
-          <thead>
-          <tr><th> Candidatos</th></tr>
-          <tr>
-              <th>Username</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th style={centered}></th>
-          </tr>
-          </thead>
-          <tbody>
-          {candidatosList.map((c) => (
-              <tr key={c.id}>
-                  <td> {c.user.username}</td>
-                  <td>{c.user.first_name} {c.user.last_name}</td>
-                  <td>{c.user.email}</td>
-                  <td style={{textAlign: "center"}}>
-                        <Button color="secondary" onClick={() => setCandidatoDetalhe(c)}>Detalhes</Button>
-                    <Button color="danger" onClick={() => apagarCandidato(c.id)}>
-                        Apagar
-                    </Button>
-                  </td>
-              </tr>
-          ))}
-          </tbody>
-      </Table>
-      {candidatoDetalhe && (
-        <div className="vagas-modal-bg" onClick={() => setCandidatoDetalhe(null)}>
-            <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                <h2> {candidatoDetalhe.user.first_name} {candidatoDetalhe.user.last_name}</h2>
-                <div className="vaga-empresa-extra">
-                    <img
-                        src={
-                            candidatoDetalhe.candidato_imagem?.startsWith('http')
-                                ? candidatoDetalhe.candidato_imagem
-                                : `http://localhost:8000/${candidatoDetalhe.imagem}`
-                        }
-                        alt="Candidato"
-                        className="vaga-empresa-img"
-                    />
-                    <div className="vaga-empresa-dados">
-                        <div><strong>Username:</strong> {candidatoDetalhe.user.username}</div>
-                        <div><strong>Email:</strong> {candidatoDetalhe.user.email}</div>
-                        <div><strong>Telefone:</strong> {candidatoDetalhe.telefone}</div>
-                    </div>
-                </div>
-                    <strong>Descrição:</strong>
-                    <div>
-                        {candidatoDetalhe.descricao}
-                    </div>
-                <br/>
-                <strong>Data de Registo:</strong>
-                <div>
-                    {formatDate(candidatoDetalhe.user.date_joined)}
-                </div>
-                <br/>
-                <strong>Último login:</strong>
-                <div>
-                    {formatDate(candidatoDetalhe.user.last_login)}
-                </div>
-                <br/>
-                <Button
-                    type="button"
-                    color="danger"
-                    onClick={() => apagarCandidato(candidatoDetalhe.id)}
-                ><strong>Apagar</strong>
-                </Button>
-                <button
-                    type="button"
-                    className="register-button vagas-modal-fechar"
-                    onClick={() => setCandidatoDetalhe(null)}
-                >Fechar
-                </button>
-            </div>
-        </div>
-      )}
-      </>
+      <div className="vagas-empresa-container">
+          <div className="vagas-lista-box">
+              {candidatosList.length === 0 ? (
+                  <p style={{color: "#fff", textAlign: "center"}}>Sem candidatos para mostrar.</p>
+              ) : (
+                  candidatosList.map((c) => (
+                      <div key={c.id} className="vaga-card">
+                          <div className="vaga-info">
+                              <div className="vaga-titulo">{c.user.first_name} {c.user.last_name}</div>
+                              <div>Username: {c.user.username}</div>
+                          </div>
+                          <div className="vaga-botoes">
+                              <button
+                                  className="vaga-detalhes-btn"
+                                  onClick={() => setCandidatoDetalhe(c)}
+                              > Detalhes
+                              </button>
+                              <button
+                                  className="vaga-remover-btn"
+                                  onClick={() => apagarCandidato(c.id)}
+                              > Remover
+                              </button>
+                          </div>
+                      </div>
+                  ))
+              )}
+          </div>
+          {candidatoDetalhe && (
+              <div className="vagas-modal-bg" onClick={() => setCandidatoDetalhe(null)}>
+                  <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
+                      <h2> {candidatoDetalhe.user.first_name} {candidatoDetalhe.user.last_name}</h2>
+                      <div className="vaga-empresa-extra">
+                          <img
+                              src={
+                                  candidatoDetalhe.candidato_imagem?.startsWith('http')
+                                      ? candidatoDetalhe.candidato_imagem
+                                      : `http://localhost:8000/${candidatoDetalhe.imagem}`
+                              }
+                              alt="Candidato"
+                              className="vaga-empresa-img"
+                          />
+                          <div className="vaga-empresa-dados">
+                              <div><strong>Username:</strong> {candidatoDetalhe.user.username}</div>
+                              <div><strong>Email:</strong> {candidatoDetalhe.user.email}</div>
+                              <div><strong>Telefone:</strong> {candidatoDetalhe.telefone}</div>
+                          </div>
+                      </div>
+                      <strong>Descrição:</strong>
+                      <div>
+                          {candidatoDetalhe.descricao}
+                      </div>
+                      <br/>
+                      <strong>Data de Registo:</strong>
+                      <div>
+                          {formatDate(candidatoDetalhe.user.date_joined)}
+                      </div>
+                      <br/>
+                      <strong>Último login:</strong>
+                      <div>
+                          {formatDate(candidatoDetalhe.user.last_login)}
+                      </div>
+                      <br/>
+                      <Button
+                          type="button"
+                          color="danger"
+                          onClick={() => apagarCandidato(candidatoDetalhe.id)}
+                      ><strong>Apagar</strong>
+                      </Button>
+                      <button
+                          type="button"
+                          className="register-button vagas-modal-fechar"
+                          onClick={() => setCandidatoDetalhe(null)}
+                      >Fechar
+                      </button>
+                  </div>
+              </div>
+          )}
+      </div>
   );
 }
 
