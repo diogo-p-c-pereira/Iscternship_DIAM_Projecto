@@ -1,72 +1,75 @@
- import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from "reactstrap";
+import ProgressBar from './ProgressBar';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const LLM_Component = ({ cv_path, vaga_info }) => {
     const URL_EXTRACTTEXTPDF = "http://localhost:8000/db_iscternship/extractTextFromPDF/";
-    const [cv_text, setPDFText] = useState('')
+    const [cv_text, setPDFText] = useState('');
+    const [points, setPoints] = useState('');
+    const [response, setResponse] = useState('');
+    const [sent, setSent] = useState(false);
 
     useEffect(() => {
         if (!cv_path) return;
         const fetchData = async () => {
             try {
-                const response = await axios.get(URL_EXTRACTTEXTPDF + cv_path );
+                const response = await axios.get(URL_EXTRACTTEXTPDF + cv_path);
                 setPDFText(response.data);
             } catch (error) {
-                setPDFText("Erro")
+                setPDFText("Erro");
             }
         };
         fetchData();
     }, [cv_path]);
 
-  const [response, setResponse] = useState('');
-  const [sent, setSent] = useState('');
-  let prompt = "Dá me em portugues de portugal neste formato: 'pontuacao;opiniao' , " +
-      "uma avaliação de 0 a 10 de o candidato ser aceite numa vaga de estágios com uma opinião resumida com as seguintes informações: cv_candidato:"
-    + cv_text.text + " informação em json da vaga: " + vaga_info
+    const sendMessage = async () => {
+        setSent(true);
 
-  const sendMessage = async () => {
-      try {
-          setSent(true)
-          const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-          const apiKey = process.env.REACT_APP_LLM_API_KEY;
+        const prompt = "Dá me em portugues de portugal neste formato: 'pontuacao;opiniao' , " +
+            "uma avaliação de 0 a 10 de o candidato ser aceite numa vaga de estágios com uma opinião resumida com as seguintes informações: cv_candidato: "
+            + cv_text.text + " informação em json da vaga: " + vaga_info;
 
-          const headers = {
-              'Authorization': `Bearer ${apiKey}`,
-              'Content-Type': 'application/json',
-              'HTTP-Referer': 'http://localhost:3000',
-              'X-Title': 'DIAM Api'
-          };
+        try {
+            /*const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-          const requestBody = {
-              model: 'nousresearch/deephermes-3-mistral-24b-preview:free', // choosen model
-              messages: [{ role: 'user', content: prompt }]
-          };
+            const result = await model.generateContent(prompt);
+            const content = await result.response.text();
 
-          const { data } = await axios.post(apiUrl, requestBody, { headers });
-          setResponse(data.choices[0].message.content);
+            const parts = content.split(";");
+            setPoints(Number(parts[0]));
+            setResponse(parts[1]);*/
+        } catch (error) {
+            console.error("Gemini API error:", error);
+        }
+    };
 
-      } catch (error) {
-          console.error('Error sending message:', error.response?.data || error.message);
-      }
-  };
-
-  return (
-      <div>
-          {cv_path}
-          <br/>
-          {cv_text.text}
-          <br/>
-          {vaga_info}
-          <div>
-              <Button color="info" onClick={sendMessage}>Avaliar</Button>
-          </div>
-          {sent?
-          <div>
-              {response ? <p>{response}</p>: <p>A aguardar resposta do LLM...</p>}
-          </div>:null}
-      </div>
-  );
+    return (
+        <div>
+            {cv_path}
+            <br />
+            {cv_text.text}
+            <br />
+            {vaga_info}
+            <div>
+                <Button color="info" onClick={sendMessage}>Avaliar</Button>
+            </div>
+            {sent ? (
+                <div>
+                    {points ? (
+                        <div>
+                            <ProgressBar value={points} />
+                            <p>{response}</p>
+                        </div>
+                    ) : (
+                        <p>A aguardar resposta do LLM...</p>
+                    )}
+                </div>
+            ) : null}
+        </div>
+    );
 };
 
 export default LLM_Component;
