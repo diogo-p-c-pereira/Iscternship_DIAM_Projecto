@@ -112,6 +112,27 @@ def vagasCandidato(request):
         })
     return Response(vagas_data)
 
+@api_view(['GET'])
+def vagasAdmin(request):
+    vagas = Vaga.objects.all()
+    vagas_data = []
+    for vaga in vagas:
+        n_candidatos = Candidatura.objects.filter(vaga=vaga).count()
+        empresa = vaga.empresa
+        vagas_data.append({
+            "id": vaga.id,
+            "titulo": vaga.titulo,
+            "descricao": vaga.descricao,
+            "estado": vaga.estado,
+            "isReportada": vaga.isReportada,
+            "n_candidatos": n_candidatos,
+            "empresa_nome": empresa.nome_empresa,
+            "empresa_morada": empresa.morada,
+            "empresa_telefone": empresa.telefone,
+            "empresa_imagem": empresa.imagem.url if empresa.imagem else None
+        })
+    return Response(vagas_data)
+
 
 
 @api_view(['GET', 'POST'])
@@ -193,6 +214,7 @@ def deleteEmpresa(request, empresa_id):
     empresa.delete()
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 @api_view(['GET', 'POST'])
