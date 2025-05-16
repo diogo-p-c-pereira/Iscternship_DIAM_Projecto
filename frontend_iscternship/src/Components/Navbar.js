@@ -30,6 +30,8 @@ const routesEmpresa = [
 const routesAdmin = [
     { path: '/', label: 'Home' },
   { path: '/listCandidates', label: 'Candidatos' },
+    { path: '/listEmpresas', label: 'Empresas' },
+    { path: '/analisarVagas', label: 'Vagas' },
 ]
 
 

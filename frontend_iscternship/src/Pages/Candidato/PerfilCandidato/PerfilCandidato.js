@@ -104,7 +104,7 @@ const PerfilCandidato = () => {
     return (
         <div className="register-container">
             <form className="register-box" onSubmit={handleSubmit} encType="multipart/form-data">
-                <h2 className="register-title">Olá, {formData.user.username}</h2>
+                <h2 className="register-title">Olá, {formData.user.first_name}</h2>
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
                     <img

@@ -16,14 +16,15 @@ import RegisterCandidato from './Pages/Candidato/RegistoCandidato/RegisterPageCa
 import RegisterEmpresa from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.js';
 
 // Admin
-import ListCandidatesPage from './Pages/Admin/ListCandidatesPage';
-//import DetailCandidates from './Pages/Admin/DetailCandidates';
+import ListCandidatesPage from './Pages/Admin/ListCandidates/ListCandidatesPage';
+import AnalisarVagasPage from './Pages/Admin/AnalisarVagas/AnalisarVagasPage';
+import ListEmpresasPage from './Pages/Admin/ListEmpresas/ListEmpresasPage';
 
 // Candidato
 import PerfilCandidato from './Pages/Candidato/PerfilCandidato/PerfilCandidatoPage.js';
 import Candidatar from './Pages/Candidato/Candidatar'
 import VagasCandidato from './Pages/Candidato/VerVagas/VagasCandidatoPage.js';
-import CandidaturasCandidato from './Pages/Candidato/VerCandidaturas/CandidaturasCandidatoPage';
+import CandidaturasCandidatoPage from './Pages/Candidato/VerCandidaturas/CandidaturasCandidatoPage';
 
 // Empresa
 import VagasEmpresa from './Pages/Empresa/VagasEmpresa/VagasPageCompany.js';
@@ -48,12 +49,18 @@ function App() {
               <Route path="/login" element={user?<Home/>:<Login />} />
               <Route path="/register" element={<RegisterCandidato />} />
               <Route path="/companies" element={<RegisterEmpresa />} />
+
               <Route path="/listCandidates" element = {user?(user.is_superuser?<ListCandidatesPage />:<Home/>): <Login/>} />
+                <Route path="/listEmpresas" element = {user?(user.is_superuser?<ListEmpresasPage />:<Home/>): <Login/>} />
+                 <Route path="/analisarVagas" element = {user?(user.is_superuser?<AnalisarVagasPage />:<Home/>): <Login/>} />
+
               <Route path="/VagasEmpresa" element = {user?(user.is_staff?<VagasEmpresa/>:<Home/>): <Login/>} />
               <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
+
+
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
               <Route path="/VagasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<VagasCandidato />): <Login/>} />
-                <Route path="/CandidaturasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<CandidaturasCandidato />): <Login/>} />
+                <Route path="/CandidaturasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<CandidaturasCandidatoPage />): <Login/>} />
               <Route path="/Candidatar/:vagaId" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<Candidatar />): <Login/>} />
             </Routes>
         </AnimatePresence>
