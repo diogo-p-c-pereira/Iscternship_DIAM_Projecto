@@ -48,26 +48,23 @@ const LLM_Component = ({ cv_path, vaga_info }) => {
 
     return (
         <div>
-            {cv_path}
-            <br />
-            {cv_text.text}
-            <br />
-            {vaga_info}
-            <div>
-                <Button color="info" onClick={sendMessage}>Avaliar</Button>
-            </div>
             {sent ? (
                 <div>
                     {points ? (
                         <div>
-                            <ProgressBar value={points} />
+                            <ProgressBar value={points}/>
                             <p>{response}</p>
                         </div>
                     ) : (
                         <p>A aguardar resposta do LLM...</p>
                     )}
                 </div>
-            ) : null}
+            ) : <button
+                type="button"
+                className="register-button vagas-modal-fechar"
+                onClick={() => sendMessage()}
+            >Avaliar Candidatura c/AI
+            </button>}
         </div>
     );
 };

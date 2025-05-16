@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../Assets/Styles/Pages/Vagas.css";
 import {useNavigate} from "react-router-dom";
-import MapComponent from '../../MapComponent'
 import { Button } from "reactstrap";
+import VagaDetalhes from '../../../Components/VagaDetalhes';
 
 
 function AnalisarVagas() {
@@ -76,38 +76,7 @@ const [vagas, setVagas] = useState([]);
       {vagaDetalhe && (
           <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
               <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                  <h2>{vagaDetalhe.titulo}</h2>
-                  <div>
-                      <strong>Estado:</strong> {vagaDetalhe.estado}
-                  </div>
-
-                  <div>
-                      <strong>Nº de candidatos:</strong> {vagaDetalhe.n_candidatos ?? 0}
-                  </div>
-                  <div><strong>Reportada:</strong> {vagaDetalhe.isReportada ? "Sim" : "Não"}</div>
-                  <div className="vaga-empresa-extra">
-                      <img
-                          src={
-                              vagaDetalhe.empresa_imagem?.startsWith('http')
-                                  ? vagaDetalhe.empresa_imagem
-                                  : `http://localhost:8000/${vagaDetalhe.empresa_imagem}`
-                          }
-                          alt="Empresa"
-                          className="vaga-empresa-img"
-                      />
-                      <div className="vaga-empresa-dados">
-                          <div><strong>Empresa:</strong> {vagaDetalhe.empresa_nome}</div>
-                          <div><strong>Morada:</strong> {vagaDetalhe.empresa_morada}</div>
-                          <div><strong>Telefone:</strong> {vagaDetalhe.empresa_telefone}</div>
-                      </div>
-                  </div>
-                  <div className="vaga-descricao-detalhe">
-                      <strong>Descrição:</strong>
-                      <div className="vaga-descricao-box">
-                          {vagaDetalhe.descricao}
-                      </div>
-                  </div>
-                  <MapComponent address={vagaDetalhe.empresa_morada}/>
+                  <VagaDetalhes vagaDetalhe={vagaDetalhe} />
                   <br/>
                   <Button
                           type="button"

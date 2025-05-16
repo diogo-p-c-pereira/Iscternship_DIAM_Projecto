@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../Assets/Styles/Pages/Vagas.css";
-import MapComponent from '../../MapComponent'
+import LLM_Component from "../../../Components/LLM_Component"
+import VagaDetalhes from "../../../Components/VagaDetalhes"
 
 const VagasCandidato = () => {
   const [vagas, setVagas] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
   const [vagaDetalhe, setVagaDetalhe] = useState(null);
+  const [vagaCandidatar, setVagaCandidatar] = useState(null);
+  const [candidatado, setCandidatado] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:8000/db_iscternship/vagas/")
@@ -46,7 +49,7 @@ const VagasCandidato = () => {
                 >Detalhes</button>
                 <button
                   className="vaga-candidatar-btn"
-                  onClick={() => alert("Funcionalidade de candidatura em breve!")}
+                  onClick={() => setVagaCandidatar(vaga)}
                 >Candidatar</button>
               </div>
             </div>
@@ -55,46 +58,47 @@ const VagasCandidato = () => {
       </div>
       {/* Modal Detalhes */}
       {vagaDetalhe && (
-        <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
-          <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-            <h2>{vagaDetalhe.titulo}</h2>
-            <div>
-              <strong>Estado:</strong> {vagaDetalhe.estado}
-            </div>
-            <div>
-              <strong>Nº de candidatos:</strong> {vagaDetalhe.n_candidatos ?? 0}
-            </div>
-            <div className="vaga-empresa-extra">
-              <img
-                src={
-                  vagaDetalhe.empresa_imagem?.startsWith('http')
-                    ? vagaDetalhe.empresa_imagem
-                    : `http://localhost:8000/${vagaDetalhe.empresa_imagem}`
-                }
-                alt="Empresa"
-                className="vaga-empresa-img"
-              />
-              <div className="vaga-empresa-dados">
-                <div><strong>Empresa:</strong> {vagaDetalhe.empresa_nome}</div>
-                <div><strong>Morada:</strong> {vagaDetalhe.empresa_morada}</div>
-                <div><strong>Telefone:</strong> {vagaDetalhe.empresa_telefone}</div>
-              </div>
-            </div>
-            <div className="vaga-descricao-detalhe">
-              <strong>Descrição:</strong>
-              <div className="vaga-descricao-box">
-                {vagaDetalhe.descricao}
-              </div>
-            </div>
-              <MapComponent address={vagaDetalhe.empresa_morada} />
-            <button
-              type="button"
-              className="register-button vagas-modal-fechar"
-              onClick={() => setVagaDetalhe(null)}
-            >Fechar</button>
+          <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
+              <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
+              <VagaDetalhes vagaDetalhe={vagaDetalhe} />
+              <button
+                  type="button"
+                  className="register-button vagas-modal-fechar"
+                  onClick={() => setVagaDetalhe(null)}
+              >Fechar
+              </button></div>
           </div>
-        </div>
       )}
+        {vagaCandidatar && (
+            <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
+                <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
+                {!candidatado ? <>
+                        <h2>{vagaCandidatar.titulo}</h2>
+                        <button
+                            type="button"
+                            className="register-button vagas-modal-fechar"
+                            onClick={() => setCandidatado(true)/*Post candidatura + ativar LLM*/}
+                        >Submeter
+                        </button>
+                        <button
+                            type="button"
+                            className="register-button vagas-modal-fechar"
+                            onClick={() => setVagaCandidatar(null)}
+                        >Cancelar
+                        </button>
+                    </>
+                    : <><h2>Candidatura Enviada!</h2>
+                        <LLM_Component vaga_info={JSON.stringify(vagaCandidatar, null, 2)} cv_path={"cv_files/CV_DiogoPereira.pdf"}/>
+                        <button
+                            type="button"
+                            className="register-button vagas-modal-fechar"
+                            onClick={() => {setVagaCandidatar(null); setCandidatado(null);}}
+                        >Fechar
+                        </button>
+                    </>}
+            </div>
+        </div>
+        )}
     </div>
   );
 };

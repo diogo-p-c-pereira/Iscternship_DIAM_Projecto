@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import {useNavigate, Link} from "react-router-dom";
 import axios from "axios";
-import MapComponent from '../../MapComponent'
+import MapComponent from '../../../Components/MapComponent'
 
 function ListEmpresas() {
 const URL_EMPRESAS = "http://localhost:8000/db_iscternship/verEmpresas/"; // (1)

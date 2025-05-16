@@ -22,7 +22,6 @@ import ListEmpresasPage from './Pages/Admin/ListEmpresas/ListEmpresasPage';
 
 // Candidato
 import PerfilCandidato from './Pages/Candidato/PerfilCandidato/PerfilCandidatoPage.js';
-import Candidatar from './Pages/Candidato/Candidatar'
 import VagasCandidato from './Pages/Candidato/VerVagas/VagasCandidatoPage.js';
 import CandidaturasCandidatoPage from './Pages/Candidato/VerCandidaturas/CandidaturasCandidatoPage';
 
@@ -61,7 +60,6 @@ function App() {
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />
               <Route path="/VagasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<VagasCandidato />): <Login/>} />
                 <Route path="/CandidaturasCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<CandidaturasCandidatoPage />): <Login/>} />
-              <Route path="/Candidatar/:vagaId" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<Candidatar />): <Login/>} />
             </Routes>
         </AnimatePresence>
       </main>
