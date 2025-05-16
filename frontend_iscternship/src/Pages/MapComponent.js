@@ -1,5 +1,3 @@
-
-// MapComponent.jsx
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
@@ -8,9 +6,10 @@ const containerStyle = {
      height: '200px'
 };
 
-const keyAPI = 'AIzaSyAPKP6YsDeSN2GRKanaLTQoiAKxFMw-j3E';
 
 const MapComponent = ({ address }) => {
+    const keyAPI = process.env.REACT_APP_GMAPS_API_KEY;
+
      const [coordinates, setCoordinates] = useState(null);
 
     useEffect(() => {

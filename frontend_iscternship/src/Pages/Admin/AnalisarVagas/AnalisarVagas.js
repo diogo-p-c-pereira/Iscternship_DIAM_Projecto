@@ -3,6 +3,7 @@ import axios from "axios";
 import "../../../Assets/Styles/Pages/Vagas.css";
 import {useNavigate} from "react-router-dom";
 import MapComponent from '../../MapComponent'
+import { Button } from "reactstrap";
 
 
 function AnalisarVagas() {
@@ -17,7 +18,7 @@ const [vagas, setVagas] = useState([]);
   axios.delete(`http://localhost:8000/db_iscternship/removerVaga/${vagaId}/`)
     .then(() => {
       setVagas(vagas.filter(v => v.id !== vagaId));
-    })
+    }).then(navigate(0))
     .catch(() => {
       alert("Erro ao remover vaga.");
     });
@@ -107,6 +108,13 @@ const [vagas, setVagas] = useState([]);
                       </div>
                   </div>
                   <MapComponent address={vagaDetalhe.empresa_morada}/>
+                  <br/>
+                  <Button
+                          type="button"
+                          color="danger"
+                          onClick={() => apagarVaga(vagaDetalhe.id)}
+                      ><strong>Apagar</strong>
+                  </Button>
                   <button
                       type="button"
                       className="register-button vagas-modal-fechar"

@@ -20,6 +20,7 @@ urlpatterns = [
 
  # Candidato
  path('vagas/', views.vagasCandidato),
+ path('verVaga/<int:vaga_id>/', views.verVaga), #TODO TIRAR
 
 
  # Empresa

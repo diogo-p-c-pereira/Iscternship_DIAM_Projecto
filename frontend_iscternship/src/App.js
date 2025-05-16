@@ -10,7 +10,7 @@ import {useUserContext} from "./UserProvider";
 import './Assets/App.css';
 
 // Login , Signup, Logout
-import Home from './Pages/HomePage';
+import Home from './Pages/Home/HomePage';
 import Login from './Pages/Login/Login.js';
 import RegisterCandidato from './Pages/Candidato/RegistoCandidato/RegisterPageCandidate.js';
 import RegisterEmpresa from './Pages/Empresa/RegistoEmpresa/RegisterPageCompany.js';
