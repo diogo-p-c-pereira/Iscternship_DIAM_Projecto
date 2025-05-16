@@ -6,6 +6,8 @@
 (5) >npm i bootstrap
 (6) >npm i reactstrap react react-dom
 (7) >npm install framer-motion 
+(8) >npm install @react-google-maps/api
+
 
 {BACKEND}
 (1) > pip install Pillow
