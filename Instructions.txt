@@ -7,6 +7,8 @@
 (6) >npm i reactstrap react react-dom
 (7) >npm install framer-motion 
 (8) >npm install @react-google-maps/api
+(9) >npm install @google/generative-ai
+
 
 
 {BACKEND}
