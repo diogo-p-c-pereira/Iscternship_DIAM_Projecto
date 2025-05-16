@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import *
 from .models import *
+from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +12,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.parsers import MultiPartParser
+import fitz # PyMuPDF
+import os
 
 # Create your views here.
 @api_view(['DELETE'])
@@ -22,6 +25,17 @@ def removerVagaEmpresa(request, vaga_id):
     
     vaga.delete()
     return Response({'success': 'Vaga removida com sucesso.'}, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def extract_text_from_pdf(request, pdf_path):
+    path = os.path.normpath(os.path.join(settings.MEDIA_ROOT, pdf_path))
+    if not os.path.exists(path):
+        return Response({'error': 'PDF file not found'}, status=404)
+    text = ""
+    with fitz.open(path) as doc:
+        for page in doc:
+            text += page.get_text()
+    return Response({'text': text})
 
 @api_view(['POST'])
 def editarVagaEmpresa(request, vaga_id):

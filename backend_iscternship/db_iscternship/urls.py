@@ -20,6 +20,7 @@ urlpatterns = [
 
  # Candidato
  path('vagas/', views.vagasCandidato),
+ path('extractTextFromPDF/<path:pdf_path>', views.extract_text_from_pdf),
  path('verVaga/<int:vaga_id>/', views.verVaga), #TODO TIRAR
 
 

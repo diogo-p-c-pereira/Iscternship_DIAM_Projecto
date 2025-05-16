@@ -47,7 +47,7 @@ const formatDate = (dateString) => {
               {vaga.descricao} <br/>
               {vaga.empresa.nome_empresa}
           </h5>
-          <LLM_Component/>
+          <LLM_Component vaga_info={JSON.stringify(vaga, null, 2)} cv_path={"cv_files/CV_DiogoPereira.pdf"}/>
 
           <br/>
           <Button color="secondary" onClick={() => navigate(-1)}>

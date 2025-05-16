@@ -11,4 +11,5 @@
 
 {BACKEND}
 (1) > pip install Pillow
-(2) > python manage.py runserver // correr o server
+(2) > pip install PyMuPDF
+(3) > python manage.py runserver // correr o server
