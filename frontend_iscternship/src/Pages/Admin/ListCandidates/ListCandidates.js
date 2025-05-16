@@ -45,6 +45,12 @@ const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
         (c.user).username.toLowerCase().includes(pesquisa.trim().toLowerCase())
   );
 
+  const cvLink = candidatoDetalhe?((candidatoDetalhe.cv && !candidatoDetalhe.cv.includes('empty.pdf'))
+        ? (candidatoDetalhe.cv.startsWith('http')
+            ? candidatoDetalhe.cv
+            : `http://localhost:8000/${candidatoDetalhe.cv}`)
+        : null): null;
+
     if (!candidatosList) return <p>A carregar dados...</p>;
 
   return (
@@ -107,6 +113,30 @@ const [candidatoDetalhe, setCandidatoDetalhe] = useState(null);
                       <strong>Descrição:</strong>
                       <div>
                           {candidatoDetalhe.descricao}
+                      </div>
+                      <br/>
+
+                          <strong>Curriculum vitae:</strong>
+                        <div>
+                          {cvLink ? (
+                    <a
+                      href={cvLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: "#a3b6d9",
+                        display: "block",
+                        marginBottom: 6,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      {candidatoDetalhe.cv.split('/').pop()}
+                    </a>
+                  ) : (
+                    <span style={{ color: "#a3b6d9", fontSize: '0.95rem', marginBottom: 6 }}>
+                      Nenhum CV enviado
+                    </span>
+                  )}
                       </div>
                       <br/>
                       <strong>Data de Registo:</strong>
