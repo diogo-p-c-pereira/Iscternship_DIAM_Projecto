@@ -93,7 +93,7 @@ def verVagasEmpresa(request, empresa_id):
 
 @api_view(['GET'])
 def vagasCandidato(request):
-    vagas = Vaga.objects.all()
+    vagas = Vaga.objects.filter(estado='Aberta')
     vagas_data = []
     for vaga in vagas:
         n_candidatos = Candidatura.objects.filter(vaga=vaga).count()
