@@ -10,12 +10,28 @@ const VagasCandidato = () => {
   const [vagaDetalhe, setVagaDetalhe] = useState(null);
   const [vagaCandidatar, setVagaCandidatar] = useState(null);
   const [candidatado, setCandidatado] = useState(null);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user.id;
+
+  const [novaCandidatura, setNovaCandidatura] = useState();
 
   useEffect(() => {
     axios.get("http://localhost:8000/db_iscternship/vagas/")
       .then(res => setVagas(res.data || []))
       .catch(() => setVagas([]));
   }, []);
+
+  const handleCriarCandidatura = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8000/db_iscternship/criarCandidatura/${userId}/`, novaCandidatura).then( () => {
+        setCandidatado(true);
+        setNovaCandidatura(null);
+      })
+      .catch(() => {
+        alert("Erro ao criar candidatura!");
+      });
+  };
+
 
   const vagasFiltradas = vagas.filter(vaga =>
     vaga.titulo.toLowerCase().includes(pesquisa.trim().toLowerCase())
@@ -73,17 +89,18 @@ const VagasCandidato = () => {
             <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
                 <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
                 {!candidatado ? <>
-                        <h2>{vagaCandidatar.titulo}</h2>
+                        <h2>Candidatar a: <br/></h2>
+                        <h4>{vagaCandidatar.titulo}</h4>
                         <button
                             type="button"
                             className="register-button vagas-modal-fechar"
-                            onClick={() => setCandidatado(true)/*Post candidatura + ativar LLM*/}
+                            onClick={() => handleCriarCandidatura()}
                         >Submeter
                         </button>
                         <button
                             type="button"
                             className="register-button vagas-modal-fechar"
-                            onClick={() => setVagaCandidatar(null)}
+                            onClick={() => {setVagaCandidatar(null); setNovaCandidatura(null)}}
                         >Cancelar
                         </button>
                     </>

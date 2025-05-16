@@ -85,6 +85,31 @@ def criarVagaEmpresa(request, user_id):
         'n_candidatos': 0
     }, status=201)
 
+@api_view(['POST'])
+def criarCandidatura(request, user_id):
+    try:
+        candidato = Candidato.objects.get(user__id=user_id)
+    except Candidato.DoesNotExist:
+        return Response({'error': 'Candidato não encontrado.'}, status=404)
+
+    vaga = request.data.get('vaga')
+
+    if not candidato or not vaga:
+        return Response({'error': 'Candidato e vaga são obrigatórios.'}, status=400)
+
+    estado = "Pendente"
+
+    candidatura = Candidatura.objects.create(
+
+    )
+
+    serializer = CandidaturaSerializer(candidatura, data=request.data, partial=True)  # permite atualizar parcialmente
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def verVagasEmpresa(request, empresa_id):
     try:
