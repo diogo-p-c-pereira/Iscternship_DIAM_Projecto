@@ -22,13 +22,11 @@ const routesCandidato = [
 ]
 
 const routesEmpresa = [
-    { path: '/', label: 'Home' },
   { path: '/VagasEmpresa', label: 'Vagas' },
   { path: '/PerfilEmpresa', label: 'Perfil' },
 ]
 
 const routesAdmin = [
-    { path: '/', label: 'Home' },
   { path: '/listCandidates', label: 'Candidatos' },
     { path: '/listEmpresas', label: 'Empresas' },
     { path: '/analisarVagas', label: 'Vagas' },
