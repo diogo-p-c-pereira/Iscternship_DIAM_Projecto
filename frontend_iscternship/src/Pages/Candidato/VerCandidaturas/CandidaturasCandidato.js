@@ -9,10 +9,13 @@ import {useUserContext} from "../../../UserProvider";
 
 function CandidaturasCandidato() {
   const {user, setUser} = useUserContext();
+  const userId = user.id;
   const [candidaturas, setCandidaturas] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
-  const [cReview, setCReview] = useState(null);
+  const [cReview, setCReview] = useState();
+  const [cDetalhe, setCDetalhe] = useState();
   const navigate = useNavigate();
+  const [novaReview, setNovaReview] = useState({comentario: "",});
 
 
 
@@ -21,6 +24,18 @@ function CandidaturasCandidato() {
         .then(res => setCandidaturas(res.data || []))
       .catch(() => setCandidaturas([]));
   }, []);
+
+  const handleCriarReview= (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8000/db_iscternship/criarReview/${userId}/${cReview.vaga.empresa.id}`, novaReview)
+      .then(() => {
+        setCReview(false);
+        setNovaReview(null);
+      })
+      .catch(() => {
+        alert("Erro ao criar review!");
+      });
+  };
 
   const candidaturasFiltradas = candidaturas.filter(c =>
     c.vaga.titulo.toLowerCase().includes(pesquisa.trim().toLowerCase())
@@ -50,13 +65,13 @@ function CandidaturasCandidato() {
                 <div className="vaga-botoes">
                     <button
                         className="vaga-detalhes-btn"
-                        onClick={() => setCReview(true)}
+                        onClick={() => setCDetalhe(c)}
                     > Detalhes
                     </button>
                     {(c.estado==="Aceite")?
                     <button
                         className="vaga-detalhes-btn"
-                        onClick={() => setCReview(true)}
+                        onClick={() => setCReview(c)}
                     > Review
                     </button>:null}
                 </div>
@@ -65,19 +80,44 @@ function CandidaturasCandidato() {
         )}
       </div>
         {/* Modal Detalhes */}
-        {cReview && (
-            <div className="vagas-modal-bg" onClick={() => setCReview(null)}>
+        {cDetalhe && (
+            <div className="vagas-modal-bg" onClick={() => setCDetalhe(null)}>
               <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-
+                  <VagaDetalhes vagaDetalhe={cDetalhe.vaga} />
                   <button
                       type="button"
                       className="register-button vagas-modal-fechar"
-                      onClick={() => setCReview(null)}
+                      onClick={() => setCDetalhe(null)}
                   >Fechar
                   </button>
               </div>
           </div>
       )}
+        {cReview && (
+            <div className="vagas-modal-bg" onClick={() => setCReview(null)}>
+                <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
+
+                    <div className="register-field">
+                        <h2>Review: {cReview.vaga.empresa.nome_empresa}</h2>
+                        <label>Comentário:</label>
+                        <textarea value={novaReview.comentario} required
+                                  onChange={e => setNovaReview(v => ({...v, comentario: e.target.value}))}/>
+                    </div>
+                    <button
+                        type="button"
+                        className="register-button vagas-modal-fechar"
+                        onClick={handleCriarReview}
+                    >Submeter
+                    </button>
+                    <button
+                        type="button"
+                        className="register-button vagas-modal-fechar"
+                        onClick={() => setCReview(null)}
+                    >Fechar
+                    </button>
+                </div>
+            </div>
+        )}
     </div>
   );
 }

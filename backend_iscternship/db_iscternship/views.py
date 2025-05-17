@@ -362,3 +362,35 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return Response({'message': 'Logged out successfully'})
+
+
+@api_view(['POST'])
+def criar_review(request, candidato_id, empresa_id):
+    try:
+        candidato = Candidato.objects.get(user__id=candidato_id)
+    except Candidato.DoesNotExist:
+        return Response({'error': 'Candidato não encontrado.'}, status=404)
+
+    try:
+        empresa = Empresa.objects.get(id=empresa_id)
+    except Empresa.DoesNotExist:
+        return Response({'error': 'Empresa não encontrada.'}, status=404)
+
+    comentario = request.data.get('comentario')
+    if not comentario:
+        return Response({'error': 'Comentário é obrigatório.'}, status=400)
+
+    review = Review.objects.create(
+        candidato=candidato,
+        empresa=empresa,
+        comentario=comentario
+    )
+
+    return Response({
+        'id': review.id,
+        'candidato': review.candidato.id,
+        'empresa': review.empresa.id,
+        'comentario': review.comentario,
+        'data': review.data
+    }, status=201)
+
