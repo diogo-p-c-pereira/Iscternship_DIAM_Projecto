@@ -4,7 +4,7 @@ import MapComponent from './MapComponent'
 import {useUserContext} from "../UserProvider";
 import axios from "axios";
 
-const VagaDetalhes = ({ vagaDetalhe }) => {
+const VagaDetalhes = ({ vagaDetalhe, children }) => {
       const {user, setUser} = useUserContext();
       const [reviews, setReviews] = useState([]);
 
@@ -50,6 +50,7 @@ const VagaDetalhes = ({ vagaDetalhe }) => {
             </div>
             <MapComponent address={vagaDetalhe.empresa_morada}/>
             <br/>
+            {children}
             <br/>
             <div><strong>Reviews:</strong>
                 {reviews.length === 0 ? (

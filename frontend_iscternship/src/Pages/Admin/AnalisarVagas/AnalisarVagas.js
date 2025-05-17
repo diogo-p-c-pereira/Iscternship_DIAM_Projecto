@@ -76,13 +76,13 @@ const [vagas, setVagas] = useState([]);
       {vagaDetalhe && (
           <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
               <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                  <VagaDetalhes vagaDetalhe={vagaDetalhe} />
+                  <VagaDetalhes vagaDetalhe={vagaDetalhe}>
                   <br/>
                   <Button
                           type="button"
                           color="danger"
                           onClick={() => apagarVaga(vagaDetalhe.id)}
-                      ><strong>Apagar</strong>
+                      ><strong>Remover</strong>
                   </Button>
                   <button
                       type="button"
@@ -90,6 +90,7 @@ const [vagas, setVagas] = useState([]);
                       onClick={() => setVagaDetalhe(null)}
                   >Fechar
                   </button>
+                  </VagaDetalhes>
               </div>
           </div>
       )}

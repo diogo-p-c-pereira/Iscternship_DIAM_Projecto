@@ -25,6 +25,7 @@ function CandidaturasCandidato() {
       .catch(() => setCandidaturas([]));
   }, []);
 
+
   const handleCriarReview= (e) => {
     e.preventDefault();
     axios.post(`http://localhost:8000/db_iscternship/criarReview/${userId}/${cReview.vaga.empresa.id}`, novaReview)
@@ -59,7 +60,7 @@ function CandidaturasCandidato() {
           candidaturasFiltradas.map((c) => (
             <div key={c.id} className="vaga-card">
                 <div className="vaga-info">
-                    <div className="vaga-titulo">Titulo da Candidatura: {c.vaga.titulo}</div>
+                    <div className="vaga-titulo">Candidatura: {c.vaga.titulo}</div>
                     <div className="vaga-estado">Estado: {c.estado}</div>
                 </div>
                 <div className="vaga-botoes">
@@ -83,21 +84,56 @@ function CandidaturasCandidato() {
         {cDetalhe && (
             <div className="vagas-modal-bg" onClick={() => setCDetalhe(null)}>
               <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                  <VagaDetalhes vagaDetalhe={cDetalhe.vaga} />
-                  <button
-                      type="button"
-                      className="register-button vagas-modal-fechar"
-                      onClick={() => setCDetalhe(null)}
-                  >Fechar
-                  </button>
+                <h2>Candidatura: {cDetalhe.vaga.titulo}</h2>
+                {console.log(cDetalhe)}
+                <div><strong>Estado:</strong> {cDetalhe.estado}</div>
+                <div><strong>Data envio:</strong> {cDetalhe.data_envio}</div>
+                <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
+                <br/>
+                <div><strong>CV Enviado: </strong>
+                  {((cDetalhe.cv && !cDetalhe.cv.includes('empty.pdf'))
+        ? (cDetalhe.cv.startsWith('http')
+            ? cDetalhe.cv
+            : `http://localhost:8000/${cDetalhe.cv}`)
+        : null) ? (
+                    <a
+                      href={`http://localhost:8000/${cDetalhe.cv}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: "#a3b6d9",
+                        display: "block",
+                        marginBottom: 6,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      {cDetalhe.cv.split('/').pop()}
+                    </a>
+                  ) : (
+                    <span style={{ color: "#a3b6d9", fontSize: '0.95rem', marginBottom: 6 }}>
+                      Nenhum CV enviado
+                    </span>
+                  )}</div>
+                <div className="vaga-descricao-detalhe">
+                  <strong>Feedback:</strong>
+                  <div className="vaga-descricao-box">
+                    {cDetalhe.feedback_empresa? cDetalhe.feedback_empresa: "Feedback não disponivel"}
+                  </div>
+                </div>
+                <button
+                    type="button"
+                    className="register-button vagas-modal-fechar"
+                    onClick={() => setCDetalhe(null)}
+                >Fechar
+                </button>
               </div>
-          </div>
-      )}
-        {cReview && (
-            <div className="vagas-modal-bg" onClick={() => setCReview(null)}>
-                <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
+            </div>
+        )}
+      {cReview && (
+          <div className="vagas-modal-bg" onClick={() => setCReview(null)}>
+            <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
 
-                    <div className="register-field">
+            <div className="register-field">
                         <h2>Review: {cReview.vaga.empresa.nome_empresa}</h2>
                         <label>Comentário:</label>
                         <textarea value={novaReview.comentario} required

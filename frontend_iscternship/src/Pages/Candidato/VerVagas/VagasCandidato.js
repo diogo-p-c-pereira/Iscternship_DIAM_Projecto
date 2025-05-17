@@ -76,13 +76,13 @@ const VagasCandidato = () => {
       {vagaDetalhe && (
           <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
               <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-              <VagaDetalhes vagaDetalhe={vagaDetalhe} />
+              <VagaDetalhes vagaDetalhe={vagaDetalhe} >
               <button
                   type="button"
                   className="register-button vagas-modal-fechar"
                   onClick={() => setVagaDetalhe(null)}
               >Fechar
-              </button></div>
+              </button></VagaDetalhes></div>
           </div>
       )}
         {vagaCandidatar && (
