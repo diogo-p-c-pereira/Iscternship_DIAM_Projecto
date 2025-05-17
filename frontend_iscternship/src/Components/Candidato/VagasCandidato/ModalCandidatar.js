@@ -37,7 +37,7 @@ const ModalCandidatar = ({
             <h2>Candidatura Enviada!</h2>
             <LLM_Component
               vaga_info={JSON.stringify(vaga, null, 2)}
-              cv_path={"/cv_files" + candidato.cv}
+              cv_path={candidato.cv}
             />
             <button
               type="button"

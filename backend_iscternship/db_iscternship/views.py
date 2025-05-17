@@ -61,7 +61,7 @@ def removerVagaEmpresa(request, vaga_id):
 
 @api_view(['GET'])
 def extract_text_from_pdf(request, pdf_path):
-    path = os.path.normpath(os.path.join(settings.MEDIA_ROOT, pdf_path))
+    path = os.path.normpath(os.path.join(settings.BASE_DIR, pdf_path))
     if not os.path.exists(path):
         return Response({'error': 'PDF file not found'}, status=404)
     text = ""
@@ -134,10 +134,12 @@ def criarCandidatura(request, candidato_id, vaga_id):
     if Candidatura.objects.filter(candidato=candidato, vaga=vaga).exists():
         return Response({'error': 'Já existe candidatura para esta vaga!'}, status=400)
 
+
     candidatura = Candidatura.objects.create(
         candidato=candidato,
         vaga=vaga,
-        estado="Pendente"
+        estado="Pendente",
+        cv=candidato.cv
     )
 
     serializer = CandidaturaSerializer(candidatura)
