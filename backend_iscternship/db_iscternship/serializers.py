@@ -36,6 +36,7 @@ class EmpresaSerializerAdmin(serializers.ModelSerializer):
         fields = '__all__'
 
 class ReviewSerializer(serializers.ModelSerializer):
+    candidato = CandidatoSerializer()
     class Meta:
         model = Review
         fields = '__all__'

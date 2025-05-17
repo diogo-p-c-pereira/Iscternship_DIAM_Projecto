@@ -153,6 +153,7 @@ def vagasCandidato(request):
             "estado": vaga.estado,
             "isReportada": vaga.isReportada,
             "n_candidatos": n_candidatos,
+            "empresa_id": empresa.id,
             "empresa_nome": empresa.nome_empresa,
             "empresa_morada": empresa.morada,
             "empresa_telefone": empresa.telefone,
@@ -174,6 +175,7 @@ def vagasAdmin(request):
             "estado": vaga.estado,
             "isReportada": vaga.isReportada,
             "n_candidatos": n_candidatos,
+            "empresa_id": empresa.id,
             "empresa_nome": empresa.nome_empresa,
             "empresa_morada": empresa.morada,
             "empresa_telefone": empresa.telefone,
@@ -217,6 +219,13 @@ def candidato(request, candidato_id):
 def verVaga(request, vaga_id):
     vaga = Vaga.objects.get(pk=vaga_id)
     serializer = VagaSerializer(vaga)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+#@permission_classes([]) fazer permissões só superuser
+def reviews(request, empresa_id):
+    review = Review.objects.filter(empresa__id=empresa_id)
+    serializer = ReviewSerializer(review , many=True)
     return Response(serializer.data)
 
 

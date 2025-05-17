@@ -23,6 +23,7 @@ urlpatterns = [
  path('extractTextFromPDF/<path:pdf_path>', views.extract_text_from_pdf),
  path('candidaturasCandidato/<int:candidato_id>/', views.canditurasCandidato),
  path('criarReview/<int:candidato_id>/<int:empresa_id>', views.criar_review),
+ path('reviews/<int:empresa_id>', views.reviews),
 
 
  # Empresa
