@@ -93,7 +93,6 @@ def criarCandidatura(request, user_id):
         return Response({'error': 'Candidato não encontrado.'}, status=404)
 
     vaga = request.data.get('vaga')
-
     if not candidato or not vaga:
         return Response({'error': 'Candidato e vaga são obrigatórios.'}, status=400)
 
@@ -103,12 +102,22 @@ def criarCandidatura(request, user_id):
 
     )
 
-    serializer = CandidaturaSerializer(candidatura, data=request.data, partial=True)  # permite atualizar parcialmente
+    serializer = CandidaturaSerializer(candidatura, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def canditurasCandidato(request, candidato_id):
+    try:
+        candidato = Candidato.objects.get(user__id=candidato_id)
+    except Candidato.DoesNotExist:
+        return Response({'error': 'Candidato não encontrado.'}, status=404)
+    candidaturas = Candidatura.objects.filter(candidato=candidato)
+    serializer = CandidaturaSerializer(candidaturas, many=True)
+    return Response(serializer.data, status=200)
 
 @api_view(['GET'])
 def verVagasEmpresa(request, empresa_id):

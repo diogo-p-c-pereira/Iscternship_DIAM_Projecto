@@ -48,7 +48,8 @@ class VagaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CandidaturaSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    candidato = CandidatoSerializer()
+    vaga = VagaSerializer()
     class Meta:
         model = Candidatura
         fields = '__all__'

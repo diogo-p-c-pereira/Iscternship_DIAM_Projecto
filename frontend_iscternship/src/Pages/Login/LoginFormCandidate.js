@@ -67,7 +67,8 @@ const LoginForm = () => {
     } catch (error) {
       alert('Erro ao fazer login. Verifique o seu username e password.');
     }
-    (user?user.is_staff? navigate('/PerfilEmpresa'): (user.is_superuser? navigate('/'): navigate('/PerfilCandidato')):navigate(0));
+
+    user?(user.is_staff? navigate('/PerfilEmpresa'): (user.is_superuser? navigate('/listCandidates'): navigate('/PerfilCandidato'))):navigate(0);
   };
 
   return (

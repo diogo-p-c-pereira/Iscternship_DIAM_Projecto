@@ -3,7 +3,7 @@ import axios from "axios";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../../Assets/Styles/Pages/HomePage.css"; // ajusta path se necessário
 
-const HomePage = () => {
+const Home = () => {
   const [empresas, setEmpresas] = useState([]);
 
   useEffect(() => {
@@ -68,7 +68,8 @@ const HomePage = () => {
           Aqui encontra e gere estágios de forma simples.<br />
           <span style={{ fontSize: "0.97em", color: "#cad6fa" }}>
             Empresas podem publicar vagas e acompanhar candidaturas. <br />
-            Candidatos podem explorar oportunidades e gerir candidaturas num só local.
+            Candidatos podem explorar oportunidades e gerir candidaturas num só local. <br/>
+              Avalia a sua probabilidade de ser aceite no estágio através de Inteligência Artificial!<br/>
           </span>
         </div>
       </div>
@@ -76,4 +77,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
