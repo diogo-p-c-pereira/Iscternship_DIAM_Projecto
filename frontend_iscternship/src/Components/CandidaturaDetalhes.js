@@ -1,17 +1,18 @@
 
 import React, {useEffect, useState} from 'react';
 import MapComponent from './MapComponent'
-import {useUserContext} from "../UserProvider";
 import axios from "axios";
+import { useUserContext } from '../UserProvider';
 
 const CandidaturaDetalhes = ({ cDetalhe, children }) => {
+      const { user } = useUserContext();
     return (
         <div>
             <h2>Candidatura: {cDetalhe.vaga.titulo}</h2>
             {console.log(cDetalhe)}
             <div><strong>Estado:</strong> {cDetalhe.estado}</div>
             <div><strong>Data envio:</strong> {cDetalhe.data_envio}</div>
-            <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
+           <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
             <br/>
             <div><strong>CV Enviado: </strong>
                 {((cDetalhe.cv && !cDetalhe.cv.includes('empty.pdf'))
