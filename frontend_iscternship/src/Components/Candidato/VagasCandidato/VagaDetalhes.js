@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import MapComponent from './MapComponent';
-import { useUserContext } from '../UserProvider';
+import MapComponent from '../../Mutual/MapComponent';
+import { useUserContext } from '../../../UserProvider';
 import axios from 'axios';
 
 const VagaDetalhes = ({ vagaDetalhe, children, viewReviews }) => {

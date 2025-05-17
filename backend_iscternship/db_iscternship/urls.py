@@ -24,6 +24,7 @@ urlpatterns = [
  path('candidaturasCandidato/<int:candidato_id>/', views.canditurasCandidato),
  path('criarReview/<int:candidato_id>/<int:empresa_id>', views.criar_review),
  path('reviews/<int:empresa_id>', views.reviews),
+ path('criarCandidatura/<int:candidato_id>/<int:vaga_id>', views.criarCandidatura),
 
 
  # Empresa
@@ -31,5 +32,9 @@ urlpatterns = [
  path('criarVagaEmpresa/<int:user_id>/', views.criarVagaEmpresa),
  path('removerVaga/<int:vaga_id>/', views.removerVagaEmpresa),
  path('editarVaga/<int:vaga_id>/', views.editarVagaEmpresa),
+ path('candidatosPorVaga/<int:vaga_id>/', views.candidatosPorVaga),
+ path('atualizarEstadoCandidatura/<int:candidatura_id>/', views.atualizarEstadoCandidatura),
+
+
 
 ]

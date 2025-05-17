@@ -1,147 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
-import {useNavigate, Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "../../../Assets/Styles/Pages/Vagas.css";
+
 import axios from "axios";
-import MapComponent from '../../../Components/MapComponent'
+import FiltroPesquisa from "../../../Components/Mutual/FiltroPesquisa";
+import EmpresaCard from "../../../Components/Admin/ListEmpresas/EmpresaCard";
+import ModalEmpresaDetalhes from "../../../Components/Admin/ListEmpresas/ModalEmpresaDetalhes";
 
 function ListEmpresas() {
-const URL_EMPRESAS = "http://localhost:8000/db_iscternship/verEmpresas/"; // (1)
-    const URL_DELETEEMRPRESA = "http://localhost:8000/db_iscternship/deleteEmpresa/";
-    const [empresasList, setEmpresasList] = useState([]); // (2)
-      const navigate = useNavigate();
+  const URL_EMPRESAS = "http://localhost:8000/db_iscternship/verEmpresas/";
+  const URL_DELETEEMPRESA = "http://localhost:8000/db_iscternship/deleteEmpresa/";
+  const [empresasList, setEmpresasList] = useState([]);
+  const [pesquisa, setPesquisa] = useState("");
+  const [empresaDetalhe, setEmpresaDetalhe] = useState(null);
+  const navigate = useNavigate();
 
-      const formatDate = (dateString) => {
-          if (!dateString) {return("Nunca")}
-    return new Date(dateString).toLocaleDateString("pt-PT", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
- });
-};
-
-  const getEmpresas = () => { // (3)
+  const getEmpresas = () => {
     axios.get(URL_EMPRESAS)
-      .then((request) => {
-        setEmpresasList(request.data)
-      }).catch(error => (alert(error)));
+      .then(res => setEmpresasList(res.data || []))
+      .catch(err => alert(err));
   };
 
-  const [pesquisa, setPesquisa] = useState("");
-const [empresaDetalhe, setEmpresaDetalhe] = useState(null);
-
-  useEffect(() => { // (4)
+  useEffect(() => {
     getEmpresas();
   }, []);
 
   const apagarEmpresa = (id) => {
-      axios.delete(URL_DELETEEMRPRESA + id).then(navigate(0))
-  }
+    axios.delete(URL_DELETEEMPRESA + id).then(() => navigate(0));
+  };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "Nunca";
+    return new Date(dateString).toLocaleDateString("pt-PT", {
+      year: "numeric", month: "long", day: "numeric",
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+  };
 
-    const empresasFiltradas = empresasList.filter(e =>
-        e.nome_empresa.toLowerCase().includes(pesquisa.trim().toLowerCase())
+  const empresasFiltradas = empresasList.filter(e =>
+    e.nome_empresa.toLowerCase().includes(pesquisa.trim().toLowerCase())
   );
-
-    if (!empresasList) return <p>A carregar dados...</p>;
 
   return (
-      <div className="vagas-empresa-container">
-          <div className="vagas-filtros">
-              <input
-                  type="text"
-                  className="vagas-barra-pesquisa"
-                  placeholder="Pesquisar empresa por nome..."
-                  value={pesquisa}
-                  onChange={e => setPesquisa(e.target.value)}
-              />
-          </div>
-          <div className="vagas-lista-box">
-              {empresasFiltradas.length === 0 ? (
-                  <p style={{color: "#fff", textAlign: "center"}}>Sem empresas para mostrar.</p>
-              ) : (
-                  empresasFiltradas.map((c) => (
-                      <div key={c.id} className="vaga-card">
-                          <div className="vaga-info">
-                              <div className="vaga-titulo">{c.nome_empresa}</div>
-                              <div>Username: {c.user.username}</div>
-                              <div>Aprovada: {c.is_approved?"Sim":"Não"}</div>
-                          </div>
-                          <div className="vaga-botoes">
-                              <button
-                                  className="vaga-detalhes-btn"
-                                  onClick={() => setEmpresaDetalhe(c)}
-                              > Detalhes
-                              </button>
-                              <button
-                                  className="vaga-remover-btn"
-                                  onClick={() => apagarEmpresa(c.id)}
-                              > Remover
-                              </button>
-                          </div>
-                      </div>
-                  ))
-              )}
-          </div>
-          {empresaDetalhe && (
-              <div className="vagas-modal-bg" onClick={() => setEmpresaDetalhe(null)}>
-                  <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                      <h2> {empresaDetalhe.nome_empresa}</h2>
-                      <div className="vaga-empresa-extra">
-                          <img
-                              src={
-                                  empresaDetalhe.empresa_imagem?.startsWith('http')
-                                      ? empresaDetalhe.empresa_imagem
-                                      : `http://localhost:8000/${empresaDetalhe.imagem}`
-                              }
-                              alt="Empresa"
-                              className="vaga-empresa-img"
-                          />
-                          <div className="vaga-empresa-dados">
-                              <div><strong>Username:</strong> {empresaDetalhe.user.username}</div>
-                              <div><strong>Email:</strong> {empresaDetalhe.user.email}</div>
-                              <div><strong>Telefone:</strong> {empresaDetalhe.telefone}</div>
-                              <div><strong>Morada:</strong> {empresaDetalhe.morada}</div>
-                          </div>
-                      </div>
-                      <strong>Aprovada:</strong>
-                      <div>
-                          {empresaDetalhe.is_approved?"Sim": "Não"}
-                      </div>
-                      <br/>
-                      <strong>Data de Registo:</strong>
-                      <div>
-                          {formatDate(empresaDetalhe.user.date_joined)}
-                      </div>
-                      <br/>
-                      <strong>Último login:</strong>
-                      <div>
-                          {formatDate(empresaDetalhe.user.last_login)}
-                      </div>
-                      <br/>
-                      <MapComponent address={empresaDetalhe.morada} />
-                      <br/>
-                      <Button
-                          type="button"
-                          color="danger"
-                          onClick={() => apagarEmpresa(empresaDetalhe.id)}
-                      ><strong>Apagar</strong>
-                      </Button>
-                      <button
-                          type="button"
-                          className="register-button vagas-modal-fechar"
-                          onClick={() => setEmpresaDetalhe(null)}
-                      >Fechar
-                      </button>
-                  </div>
-              </div>
-          )}
+    <div className="vagas-empresa-container">
+      <FiltroPesquisa pesquisa={pesquisa} setPesquisa={setPesquisa} />
+
+      <div className="vagas-lista-box">
+        {empresasFiltradas.length === 0 ? (
+          <p style={{ color: "#fff", textAlign: "center" }}>Sem empresas para mostrar.</p>
+        ) : (
+          empresasFiltradas.map(empresa => (
+            <EmpresaCard
+              key={empresa.id}
+              empresa={empresa}
+              onDetalhesClick={setEmpresaDetalhe}
+              onRemoverClick={apagarEmpresa}
+            />
+          ))
+        )}
       </div>
+
+      {empresaDetalhe && (
+        <ModalEmpresaDetalhes
+          empresa={empresaDetalhe}
+          onClose={() => setEmpresaDetalhe(null)}
+          onDelete={apagarEmpresa}
+          formatDate={formatDate}
+        />
+      )}
+    </div>
   );
-
 }
-
 
 export default ListEmpresas;

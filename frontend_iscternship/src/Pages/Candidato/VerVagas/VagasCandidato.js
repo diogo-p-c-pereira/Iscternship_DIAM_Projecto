@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../Assets/Styles/Pages/Vagas.css";
-import LLM_Component from "../../../Components/LLM_Component"
-import VagaDetalhes from "../../../Components/VagaDetalhes"
+import VagaDetalhes from "../../../Components/Candidato/VagasCandidato/VagaDetalhes";
+import ModalCandidatar from "../../../Components/Candidato/VagasCandidato/ModalCandidatar";
 
 const VagasCandidato = () => {
   const [vagas, setVagas] = useState([]);
@@ -10,20 +10,35 @@ const VagasCandidato = () => {
   const [vagaDetalhe, setVagaDetalhe] = useState(null);
   const [vagaCandidatar, setVagaCandidatar] = useState(null);
   const [candidatado, setCandidatado] = useState(null);
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [me, setMe] = useState(null);
+
+  const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
 
   const [novaCandidatura, setNovaCandidatura] = useState();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/db_iscternship/vagas/")
-      .then(res => setVagas(res.data || []))
+  if (vagaCandidatar) {
+    axios.get(`http://localhost:8000/db_iscternship/candidato/${userId}`)
+      .then(res => setMe(res.data))
+      .catch(() => setMe(null));
+  }
+}, [vagaCandidatar, userId]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/db_iscternship/vagas/")
+      .then((res) => setVagas(res.data || []))
       .catch(() => setVagas([]));
   }, []);
 
-  const handleCriarCandidatura = (e) => {
-    e.preventDefault();
-    axios.post(`http://localhost:8000/db_iscternship/criarCandidatura/${userId}/`, novaCandidatura).then( () => {
+  const handleCriarCandidatura = () => {
+    axios
+      .post(
+        `http://localhost:8000/db_iscternship/criarCandidatura/${userId}/${vagaCandidatar.id}`,
+        novaCandidatura
+      )
+      .then(() => {
         setCandidatado(true);
         setNovaCandidatura(null);
       })
@@ -32,8 +47,13 @@ const VagasCandidato = () => {
       });
   };
 
+  const resetCandidatura = () => {
+    setVagaCandidatar(null);
+    setNovaCandidatura(null);
+    setCandidatado(null);
+  };
 
-  const vagasFiltradas = vagas.filter(vaga =>
+  const vagasFiltradas = vagas.filter((vaga) =>
     vaga.titulo.toLowerCase().includes(pesquisa.trim().toLowerCase())
   );
 
@@ -45,9 +65,10 @@ const VagasCandidato = () => {
           className="vagas-barra-pesquisa"
           placeholder="Pesquisar vaga por nome..."
           value={pesquisa}
-          onChange={e => setPesquisa(e.target.value)}
+          onChange={(e) => setPesquisa(e.target.value)}
         />
       </div>
+
       <div className="vagas-lista-box">
         {vagasFiltradas.length === 0 ? (
           <p className="vagas-sem-resultados">Sem vagas para mostrar.</p>
@@ -62,60 +83,49 @@ const VagasCandidato = () => {
                 <button
                   className="vaga-detalhes-btn"
                   onClick={() => setVagaDetalhe(vaga)}
-                >Detalhes</button>
+                >
+                  Detalhes
+                </button>
                 <button
                   className="vaga-candidatar-btn"
                   onClick={() => setVagaCandidatar(vaga)}
-                >Candidatar</button>
+                >
+                  Candidatar
+                </button>
               </div>
             </div>
           ))
         )}
       </div>
-      {/* Modal Detalhes */}
+
       {vagaDetalhe && (
-          <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
-              <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-              <VagaDetalhes vagaDetalhe={vagaDetalhe} viewReviews={true}>
+        <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
+          <div className="vagas-modal-form" onClick={(e) => e.stopPropagation()}>
+            <VagaDetalhes vagaDetalhe={vagaDetalhe} viewReviews={true}>
               <button
-                  type="button"
-                  className="register-button vagas-modal-fechar"
-                  onClick={() => setVagaDetalhe(null)}
-              >Fechar
-              </button></VagaDetalhes></div>
+                type="button"
+                className="register-button vagas-modal-fechar"
+                onClick={() => setVagaDetalhe(null)}
+              >
+                Fechar
+              </button>
+            </VagaDetalhes>
           </div>
-      )}
-        {vagaCandidatar && (
-            <div className="vagas-modal-bg" onClick={() => setVagaDetalhe(null)}>
-                <div className="vagas-modal-form" onClick={e => e.stopPropagation()}>
-                {!candidatado ? <>
-                        <h2>Candidatar a: <br/></h2>
-                        <h4>{vagaCandidatar.titulo}</h4>
-                        <button
-                            type="button"
-                            className="register-button vagas-modal-fechar"
-                            onClick={() => handleCriarCandidatura()}
-                        >Submeter
-                        </button>
-                        <button
-                            type="button"
-                            className="register-button vagas-modal-fechar"
-                            onClick={() => {setVagaCandidatar(null); setNovaCandidatura(null)}}
-                        >Cancelar
-                        </button>
-                    </>
-                    : <><h2>Candidatura Enviada!</h2>
-                        <LLM_Component vaga_info={JSON.stringify(vagaCandidatar, null, 2)} cv_path={"cv_files/CV_DiogoPereira.pdf"}/>
-                        <button
-                            type="button"
-                            className="register-button vagas-modal-fechar"
-                            onClick={() => {setVagaCandidatar(null); setCandidatado(null);}}
-                        >Fechar
-                        </button>
-                    </>}
-            </div>
         </div>
-        )}
+      )}
+
+      {vagaCandidatar && (
+        <ModalCandidatar
+          vaga={vagaCandidatar}
+          candidatado={candidatado}
+          onSubmit={handleCriarCandidatura}
+          onClose={() => setVagaDetalhe(null)}
+          onReset={resetCandidatura}
+          candidato={me}
+        />
+      )}
+      <br />
+      <br />
     </div>
   );
 };

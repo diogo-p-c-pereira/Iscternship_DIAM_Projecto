@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const LLM_Component = ({ cv_path, vaga_info }) => {
-    const URL_EXTRACTTEXTPDF = "http://localhost:8000/db_iscternship/extractTextFromPDF/";
+    const URL_EXTRACTTEXTPDF = "http://localhost:8000/db_iscternship/extractTextFromPDF";
     const [cv_text, setPDFText] = useState('');
     const [points, setPoints] = useState('');
     const [response, setResponse] = useState('');
@@ -32,15 +32,15 @@ const LLM_Component = ({ cv_path, vaga_info }) => {
             + cv_text.text + " informação em json da vaga: " + vaga_info;
 
         try {
-            /*const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+            const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             const result = await model.generateContent(prompt);
-            const content = await result.response.text();
+            const content = result.response.text();
 
             const parts = content.split(";");
             setPoints(Number(parts[0]));
-            setResponse(parts[1]);*/
+            setResponse(parts[1]);
         } catch (error) {
             console.error("Gemini API error:", error);
         }

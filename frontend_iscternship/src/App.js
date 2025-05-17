@@ -28,6 +28,7 @@ import CandidaturasCandidatoPage from './Pages/Candidato/VerCandidaturas/Candida
 // Empresa
 import VagasEmpresa from './Pages/Empresa/VagasEmpresa/VagasPageCompany.js';
 import PerfilEmpresa from './Pages/Empresa/PerfilEmpresa/PerfilEmpresaPage.js';
+import CandidatosPorVaga from './Pages/Empresa/VagasEmpresa/CandidatosPorVaga.js';
 
 
 
@@ -55,6 +56,7 @@ function App() {
 
               <Route path="/VagasEmpresa" element = {user?(user.is_staff?<VagasEmpresa/>:<Home/>): <Login/>} />
               <Route path="/PerfilEmpresa" element = {user?(user.is_staff?<PerfilEmpresa />:<Home/>): <Login/>} />
+              <Route path="/VagasEmpresa/:vagaId/candidatos" element = {<CandidatosPorVaga/>} />
 
 
               <Route path="/PerfilCandidato" element = {user?((user.is_staff || user.is_superuser)?<Home/>:<PerfilCandidato />): <Login/>} />

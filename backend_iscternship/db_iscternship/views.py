@@ -16,6 +16,39 @@ import fitz # PyMuPDF
 import os
 
 # Create your views here.
+
+@api_view(['POST'])
+def atualizarEstadoCandidatura(request, candidatura_id):
+    try:
+        candidatura = Candidatura.objects.get(pk=candidatura_id)
+    except Candidatura.DoesNotExist:
+        return Response({'error': 'Candidatura não encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+    novo_estado = request.data.get('estado')
+
+    # Se o estado não vier ou for inválido
+    if not novo_estado or novo_estado not in ['Pendente', 'Em Processamento', 'Aceite', 'Rejeitada']:
+        return Response({'error': f"Estado inválido: {novo_estado}"}, status=status.HTTP_400_BAD_REQUEST)
+
+    candidatura.estado = novo_estado
+    candidatura.save()
+
+    return Response({'success': f"Estado atualizado para {novo_estado}"}, status=status.HTTP_200_OK)
+
+
+
+@api_view(['GET'])
+def candidatosPorVaga(request, vaga_id):
+    try:
+        vaga = Vaga.objects.get(pk=vaga_id)
+    except Vaga.DoesNotExist:
+        return Response({'error': 'Vaga não encontrada.'}, status=404)
+
+    candidaturas = Candidatura.objects.filter(vaga=vaga)
+    serializer = CandidaturaSerializer(candidaturas, many=True)
+    return Response(serializer.data, status=200)
+
+
 @api_view(['DELETE'])
 def removerVagaEmpresa(request, vaga_id):
     try:
@@ -86,28 +119,31 @@ def criarVagaEmpresa(request, user_id):
     }, status=201)
 
 @api_view(['POST'])
-def criarCandidatura(request, user_id):
+def criarCandidatura(request, candidato_id, vaga_id):
     try:
-        candidato = Candidato.objects.get(user__id=user_id)
+        candidato = Candidato.objects.get(user__id=candidato_id)
     except Candidato.DoesNotExist:
         return Response({'error': 'Candidato não encontrado.'}, status=404)
 
-    vaga = request.data.get('vaga')
-    if not candidato or not vaga:
-        return Response({'error': 'Candidato e vaga são obrigatórios.'}, status=400)
+    try:
+        vaga = Vaga.objects.get(pk=vaga_id)
+    except Vaga.DoesNotExist:
+        return Response({'error': 'Vaga não encontrada.'}, status=404)
 
-    estado = "Pendente"
+    # (Opcional) prevenir candidatura duplicada:
+    if Candidatura.objects.filter(candidato=candidato, vaga=vaga).exists():
+        return Response({'error': 'Já existe candidatura para esta vaga!'}, status=400)
 
     candidatura = Candidatura.objects.create(
-
+        candidato=candidato,
+        vaga=vaga,
+        estado="Pendente"
     )
 
-    serializer = CandidaturaSerializer(candidatura, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer = CandidaturaSerializer(candidatura)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def canditurasCandidato(request, candidato_id):
