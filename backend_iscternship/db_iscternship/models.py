@@ -55,11 +55,3 @@ class Candidatura(models.Model):
     data_envio = models.DateTimeField(auto_now_add=True)
     feedback_empresa = models.TextField(null=True, blank=True)
     cv = models.FileField(upload_to='cv_files', default='cv_files/empty.pdf', null=True, blank=True)
-
-
-
-class Report(models.Model):
-    candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
-    vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE)
-    motivo = models.TextField()
-    data = models.DateTimeField(auto_now_add=True)

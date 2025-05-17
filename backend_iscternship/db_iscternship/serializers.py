@@ -54,8 +54,4 @@ class CandidaturaSerializer(serializers.ModelSerializer):
         model = Candidatura
         fields = '__all__'
 
-class ReportßSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Report
-        fields = '__all__'
 

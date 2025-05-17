@@ -53,11 +53,12 @@ function CandidaturasCandidato() {
                         onClick={() => setCReview(true)}
                     > Detalhes
                     </button>
+                    {(c.estado==="Aceite")?
                     <button
                         className="vaga-detalhes-btn"
                         onClick={() => setCReview(true)}
                     > Review
-                    </button>
+                    </button>:null}
                 </div>
             </div>
           ))
