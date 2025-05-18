@@ -53,5 +53,4 @@ class Candidatura(models.Model):
     vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE)
     estado = models.CharField(choices=EstadoCandidatura.choices, default=EstadoCandidatura.PEND, max_length=20)
     data_envio = models.DateTimeField(auto_now_add=True)
-    feedback_empresa = models.TextField(null=True, blank=True)
     cv = models.FileField(upload_to='cv_files', default='cv_files/empty.pdf', null=True, blank=True)

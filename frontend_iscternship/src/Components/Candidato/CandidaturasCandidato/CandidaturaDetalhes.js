@@ -50,12 +50,6 @@ const CandidaturaDetalhes = ({ cDetalhe, children }) => {
           </span>
               )}
           </div>
-          <div className="vaga-descricao-detalhe">
-              <strong>Feedback:</strong>
-              <div className="vaga-descricao-box">
-                  {cDetalhe.feedback_empresa ? cDetalhe.feedback_empresa : "Feedback não disponivel"}
-              </div>
-          </div>
 
           {children && <div style={{marginTop: 20}}>{children}</div>}
       </div>
