@@ -60,6 +60,8 @@ function CandidatosPorVaga() {
                 <div className="vaga-titulo">
                   {c.candidato.user.first_name} {c.candidato.user.last_name}
                 </div>
+                  Email: {c.candidato.user.email} <br/>
+                  Telefone: {c.candidato.telefone}
                 <div className="vaga-estado">Estado: {c.estado}
                       <select
                         value={c.estado}

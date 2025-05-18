@@ -20,39 +20,45 @@ const CandidaturaDetalhes = ({ cDetalhe, children }) => {
   };
 
   return (
-    <div>
-      <h2>Candidatura: {cDetalhe.vaga.titulo}</h2>
-
-      <div><strong>Estado:</strong> {cDetalhe.estado}</div>
-      <div><strong>Data envio:</strong> {formatDate(cDetalhe.data_envio)}</div>
-      <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
-      <br />
-
       <div>
-        <strong>CV Enviado:</strong>
-        {cvLink ? (
-          <a
-            href={cvLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "#a3b6d9",
-              display: "block",
-              marginBottom: 6,
-              fontWeight: "bold"
-            }}
-          >
-            {cDetalhe.cv.split('/').pop()}
-          </a>
-        ) : (
-          <span style={{ color: "#a3b6d9", fontSize: '0.95rem', marginBottom: 6 }}>
+          <h2>Candidatura: {cDetalhe.vaga.titulo}</h2>
+
+          <div><strong>Estado:</strong> {cDetalhe.estado}</div>
+          <div><strong>Data envio:</strong> {formatDate(cDetalhe.data_envio)}</div>
+          <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
+          <br/>
+
+          <div>
+              <strong>CV Enviado:</strong>
+              {cvLink ? (
+                  <a
+                      href={cvLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                          color: "#a3b6d9",
+                          display: "block",
+                          marginBottom: 6,
+                          fontWeight: "bold"
+                      }}
+                  >
+                      {cDetalhe.cv.split('/').pop()}
+                  </a>
+              ) : (
+                  <span style={{color: "#a3b6d9", fontSize: '0.95rem', marginBottom: 6}}>
             Nenhum CV enviado
           </span>
-        )}
-      </div>
+              )}
+          </div>
+          <div className="vaga-descricao-detalhe">
+              <strong>Feedback:</strong>
+              <div className="vaga-descricao-box">
+                  {cDetalhe.feedback_empresa ? cDetalhe.feedback_empresa : "Feedback não disponivel"}
+              </div>
+          </div>
 
-      {children && <div style={{ marginTop: 20 }}>{children}</div>}
-    </div>
+          {children && <div style={{marginTop: 20}}>{children}</div>}
+      </div>
   );
 };
 
