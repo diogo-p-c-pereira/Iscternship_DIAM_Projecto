@@ -11,12 +11,20 @@ const CandidaturaDetalhes = ({ cDetalhe, children }) => {
           : `http://localhost:8000/${cDetalhe.cv}`)
       : null;
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "Nunca";
+    return new Date(dateString).toLocaleDateString("pt-PT", {
+      year: "numeric", month: "long", day: "numeric",
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+  };
+
   return (
     <div>
       <h2>Candidatura: {cDetalhe.vaga.titulo}</h2>
 
       <div><strong>Estado:</strong> {cDetalhe.estado}</div>
-      <div><strong>Data envio:</strong> {cDetalhe.data_envio}</div>
+      <div><strong>Data envio:</strong> {formatDate(cDetalhe.data_envio)}</div>
       <div><strong>Empresa:</strong> {cDetalhe.vaga.empresa.nome_empresa}</div>
       <br />
 
